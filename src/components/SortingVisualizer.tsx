@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { BLUE } from "../core/model/Color";
 import { Bar } from "../core/model/Bar";
-import { SelectionSort } from "../core/sorting/SelectionSort";
-import { InsertionSort } from "../core/sorting/InsertionSort";
 import { Sorter } from "../core/sorting/Sorter";
 import { finish } from "../core/sorting/Animation";
+import { getAlgorithm } from "../core/sorting/AlgorithmFactory";
 
 function App() {
   const [bars, setBars] = useState<Bar[]>([]);
@@ -16,13 +15,7 @@ function App() {
   }, []);
 
   const sort = async (): Promise<void> => {
-    // TODO: Fix this smelly code
-    var sorter: Sorter;
-    if (algorithm === "selection") {
-      sorter = SelectionSort.getInstance();
-    } else if (algorithm === "insertion") {
-      sorter = InsertionSort.getInstance();
-    } else return;
+    var sorter: Sorter = getAlgorithm(algorithm);
     await sorter.sort(bars, setBars);
     await finish(bars, setBars);
   };
