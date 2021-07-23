@@ -9,10 +9,11 @@ import { getAlgorithm } from "../core/sorting/AlgorithmFactory";
 function App() {
   const [bars, setBars] = useState<Bar[]>([]);
   const [algorithm, setAlgorithm] = useState<string>("selection");
+  const [num, setNum] = useState<number>(20);
 
   useEffect(() => {
     reset();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sort = async (): Promise<void> => {
     var sorter: Sorter = getAlgorithm(algorithm);
@@ -22,11 +23,18 @@ function App() {
 
   const reset = (): void =>
     setBars(
-      [...Array(20)].map(() => ({
+      [...Array(num)].map(() => ({
         num: Math.floor(Math.random() * 200),
         color: BLUE,
       }))
     );
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let { value, min, max } = e.target;
+    const val = Math.max(Number(min), Math.min(Number(max), Number(value)));
+    setNum(val);
+    reset();
+  };
 
   return (
     <div>
@@ -37,6 +45,16 @@ function App() {
           </option>
           <option value="insertion">Insertion sort</option>
         </select>
+        <input
+          name="no. bars"
+          type="number"
+          value={num}
+          step={5}
+          min="5"
+          max="100"
+          onChange={handleNumberChange}
+          onKeyDown={(e) => e.preventDefault()}
+        />
         <button onClick={sort}> sort! </button>
         <button onClick={reset}> reset! </button>
       </div>
