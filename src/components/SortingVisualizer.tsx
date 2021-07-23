@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-
-type Color = "#FF0000" | "#0000FF";
-const RED: Color = "#FF0000";
-const BLUE: Color = "#0000FF";
-
-interface Bar {
-  num: number;
-  color: Color;
-}
+import { BLUE } from "../core/model/Color";
+import { Bar } from "../core/model/Bar";
+import { SelectionSort } from "../core/sorting/SelectionSort";
+import { Sorter } from "../core/sorting/Sorter";
 
 function App() {
   const [nums, setNums] = useState<Bar[]>([]);
@@ -17,25 +12,9 @@ function App() {
     reset();
   }, []);
 
-  const sleep = (delay: number) =>
-    new Promise((resolve) => setTimeout(resolve, delay));
-
-  // selection sort
   const sort = async (): Promise<void> => {
-    var arr = [...nums];
-    const n: number = nums.length;
-    for (var i = 0; i < n - 1; i++) {
-      var iMin: number = i;
-      for (var j: number = i + 1; j < n; j++)
-        if (arr[j].num < arr[iMin].num) iMin = j;
-
-      const temp = arr[i];
-      arr[i] = arr[iMin];
-      arr[iMin] = temp;
-
-      await sleep(500);
-      setNums([...arr]);
-    }
+    const sorter: Sorter = SelectionSort.getInstance();
+    sorter.sort(nums, setNums);
   };
 
   const reset = (): void =>
