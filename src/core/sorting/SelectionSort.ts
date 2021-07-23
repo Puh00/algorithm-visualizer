@@ -2,6 +2,7 @@ import React, { SetStateAction } from "react";
 import { Sorter } from "./Sorter";
 import { Bar } from "../model/Bar";
 import { sleep } from "../../utils/Sleep";
+import { RED } from "../model/Color";
 
 export class SelectionSort implements Sorter {
   private static instance: SelectionSort;
@@ -27,8 +28,13 @@ export class SelectionSort implements Sorter {
       bars[i] = bars[iMin];
       bars[iMin] = temp;
 
-      await sleep(500);
+      await sleep(150);
+      bars[i].color = RED;
       setState([...bars]);
     }
+
+    // manually make last element red cause yeah
+    bars[bars.length - 1].color = RED;
+    setState([...bars]);
   };
 }

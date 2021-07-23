@@ -4,9 +4,10 @@ import { BLUE } from "../core/model/Color";
 import { Bar } from "../core/model/Bar";
 import { SelectionSort } from "../core/sorting/SelectionSort";
 import { Sorter } from "../core/sorting/Sorter";
+import { finish } from "../core/sorting/Animation";
 
 function App() {
-  const [nums, setNums] = useState<Bar[]>([]);
+  const [bars, setBars] = useState<Bar[]>([]);
 
   useEffect(() => {
     reset();
@@ -14,11 +15,12 @@ function App() {
 
   const sort = async (): Promise<void> => {
     const sorter: Sorter = SelectionSort.getInstance();
-    sorter.sort(nums, setNums);
+    await sorter.sort(bars, setBars);
+    await finish(bars, setBars);
   };
 
   const reset = (): void =>
-    setNums(
+    setBars(
       [...Array(20)].map(() => ({
         num: Math.floor(Math.random() * 200),
         color: BLUE,
@@ -34,11 +36,11 @@ function App() {
 
       <div className="center">
         <div style={{ display: "flex" }}>
-          {nums.map((bar: Bar) => {
+          {bars.map((bar: Bar) => {
             return (
               <div
                 style={{
-                  backgroundColor: "blue",
+                  backgroundColor: bar.color,
                   width: "10px",
                   height: `${bar.num}px`,
                   marginRight: "1px",
