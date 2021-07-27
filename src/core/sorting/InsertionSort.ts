@@ -3,17 +3,12 @@ import { Sorter } from "./Sorter";
 import { Bar } from "../model/Bar";
 import { sleep } from "../../utils/Sleep";
 import { RED, GREEN } from "../model/Color";
+import { Singleton } from "../../utils/Singleton";
 
-export class InsertionSort implements Sorter {
-  private static instance: InsertionSort;
-
-  private constructor() {}
-
-  static getInstance(): InsertionSort {
-    if (!this.instance) this.instance = new this();
-    return this.instance;
-  }
-
+export class InsertionSort
+  extends Singleton<InsertionSort>()
+  implements Sorter
+{
   public sort = async (
     bars: Bar[],
     setState: React.Dispatch<SetStateAction<Bar[]>>
