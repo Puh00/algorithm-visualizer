@@ -2,7 +2,7 @@ import React, { SetStateAction } from "react";
 import { Sorter } from "./Sorter";
 import { Bar } from "../model/Bar";
 import { sleep } from "../../utils/Sleep";
-import { RED } from "../model/Color";
+import { RED, GREEN, BLUE } from "../model/Color";
 
 export class SelectionSort implements Sorter {
   private static instance: SelectionSort;
@@ -21,14 +21,22 @@ export class SelectionSort implements Sorter {
     const n: number = bars.length;
     for (var i = 0; i < n - 1; i++) {
       var iMin: number = i;
-      for (var j: number = i + 1; j < n; j++)
+      for (var j: number = i + 1; j < n; j++) {
         if (bars[j].num < bars[iMin].num) iMin = j;
+
+        if (j === n - 1) {
+          // Mark the smallest element in the unsorted array
+          bars[iMin].color = GREEN;
+          setState([...bars]);
+        }
+      }
 
       const temp = bars[i];
       bars[i] = bars[iMin];
       bars[iMin] = temp;
 
       await sleep(150);
+      bars[iMin].color = BLUE; // Unmark
       bars[i].color = RED;
       setState([...bars]);
     }
