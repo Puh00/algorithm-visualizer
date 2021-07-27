@@ -1,7 +1,7 @@
 import SortingVisualizer from "./components/SortingVisualizer";
 
-function App() {
+const App = () => {
   return <SortingVisualizer />;
-}
+};
 
 export default App;
