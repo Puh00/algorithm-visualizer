@@ -44,6 +44,7 @@ function App() {
             Selection sort
           </option>
           <option value="insertion">Insertion sort</option>
+          <option value="bubble">Bubble sort</option>
         </select>
         <input
           name="no. bars"
