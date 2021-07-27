@@ -30,8 +30,7 @@ export class BubbleSort extends Singleton<BubbleSort>() implements Sorter {
         }
 
         if (j === greatestElementIndex - 2) {
-          // make the last iteration's greatest element green at the end of
-          // each iteration (sorted partition)
+          // make the iteration's greatest element green (sorted partition)
           greatestElementIndex--;
           bars[greatestElementIndex].color = RED;
           setState([...bars]);
