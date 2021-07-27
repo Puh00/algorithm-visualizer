@@ -11,6 +11,6 @@ export const finish = async (
   for (var i: number = 0; i < bars.length; i++) {
     bars[i].color = GREEN;
     setState([...bars]);
-    await sleep(25);
+    await sleep(5);
   }
 };
