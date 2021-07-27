@@ -10,7 +10,7 @@ export class BubbleSort extends Singleton<BubbleSort>() implements Sorter {
     bars: Bar[],
     setState: React.Dispatch<React.SetStateAction<Bar[]>>
   ): Promise<void> => {
-    let n: number = bars.length;
+    const n: number = bars.length;
     let greatestElementIndex: number = bars.length;
 
     for (let i = 0; i < n; i++) {
