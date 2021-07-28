@@ -11,6 +11,7 @@ import { Panel } from "./Panel";
 
 const algorithms = [
   { name: "Insertion Sort", value: "insertion" },
+  { name: "Selection Sort", value: "selection" },
   { name: "Bubble Sort", value: "bubble" },
   { name: "Quicksort", value: "quick" },
   { name: "Merge Sort", value: "merge" },
@@ -46,6 +47,7 @@ export const SortingVisualizer = () => {
     reset();
   };
 
+  // Todo: give unique key to each bar
   const renderBars = (): JSX.Element => (
     <div className="sorting-container">
       {bars.map((bar: Bar) => (
