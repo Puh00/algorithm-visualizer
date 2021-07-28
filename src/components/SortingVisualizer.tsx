@@ -46,6 +46,7 @@ function App() {
           <option value="insertion">Insertion sort</option>
           <option value="bubble">Bubble sort</option>
           <option value="quick">Quick sort</option>
+          <option value="merge">Merge sort</option>
         </select>
         <input
           name="no. bars"
