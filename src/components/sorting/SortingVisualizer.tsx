@@ -5,10 +5,11 @@ import { Bar } from "../../core/model/Bar";
 import { Sorter } from "../../core/sorting/Sorter";
 import { finish } from "../../core/sorting/Animation";
 import { getAlgorithm } from "../../core/sorting/AlgorithmFactory";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { AlgorithmButtonGroup } from "./AlgorithmButtonGroup";
+import { Panel } from "./Panel";
 
-const radios = [
+const algorithms = [
   { name: "Insertion Sort", value: "insertion" },
   { name: "Bubble Sort", value: "bubble" },
   { name: "Quicksort", value: "quick" },
@@ -18,14 +19,14 @@ const radios = [
 export const SortingVisualizer = () => {
   const [bars, setBars] = useState<Bar[]>([]);
   const [num, setNum] = useState<number>(90);
-  const [radioValue, setRadioValue] = useState("insertion");
+  const [algorithm, setAlgorithm] = useState("insertion");
 
   useEffect((): void => {
     reset();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sort = async (): Promise<void> => {
-    var sorter: Sorter = getAlgorithm(radioValue);
+    var sorter: Sorter = getAlgorithm(algorithm);
     await sorter.sort(bars, setBars);
     await finish(bars, setBars);
   };
@@ -64,24 +65,16 @@ export const SortingVisualizer = () => {
     <Container fluid={true} style={{ padding: "0" }}>
       <Row className="app-vanish text-center justify-content-center">
         <Col md="auto">
-          <input
-            name="no. bars"
-            type="number"
-            value={num}
-            step={5}
-            min="5"
-            max="150"
-            onChange={handleNumberChange}
-            onKeyDown={(e) => e.preventDefault()}
+          <Panel
+            num={num}
+            handleNumberChange={handleNumberChange}
+            reset={reset}
+            sort={sort}
           />
-          <Button onClick={reset} className="mx-2" variant="danger">
-            Reset
-          </Button>
-          <Button onClick={sort}>Sort</Button>
           <AlgorithmButtonGroup
-            defaultAlgorithm={radioValue}
-            algorithms={radios}
-            setAlgorithm={setRadioValue}
+            defaultAlgorithm={algorithm}
+            algorithms={algorithms}
+            setAlgorithm={setAlgorithm}
           />
         </Col>
       </Row>
