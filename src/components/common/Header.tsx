@@ -2,7 +2,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 
 export const Header = () => {
   return (
-    <Navbar expand="md" bg="dark" variant="dark">
+    <Navbar expand="md" bg="dark" variant="dark" className="app-vanish">
       <Container>
         <Navbar.Brand href="/">〽️</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
