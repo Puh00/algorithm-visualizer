@@ -5,14 +5,8 @@ import { Bar } from "../../core/model/Bar";
 import { Sorter } from "../../core/sorting/Sorter";
 import { finish } from "../../core/sorting/Animation";
 import { getAlgorithm } from "../../core/sorting/AlgorithmFactory";
-import {
-  Button,
-  ButtonGroup,
-  Col,
-  Container,
-  Row,
-  ToggleButton,
-} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { AlgorithmButtonGroup } from "./AlgorithmButtonGroup";
 
 const radios = [
   { name: "Insertion Sort", value: "insertion" },
@@ -51,26 +45,6 @@ export const SortingVisualizer = () => {
     reset();
   };
 
-  // TODO: Move to separate component (pass down state and which algos)
-  const renderAlgorithmButtons = (): JSX.Element => (
-    <ButtonGroup className="p-3">
-      {radios.map((radio, idx) => (
-        <ToggleButton
-          key={idx}
-          id={`radio-${idx}`}
-          type="radio"
-          variant="outline-warning"
-          name="radio"
-          value={radio.value}
-          checked={radioValue === radio.value}
-          onChange={(e) => setRadioValue(e.currentTarget.value)}
-        >
-          {radio.name}
-        </ToggleButton>
-      ))}
-    </ButtonGroup>
-  );
-
   const renderBars = (): JSX.Element => (
     <div className="sorting-container">
       {bars.map((bar: Bar) => (
@@ -104,7 +78,11 @@ export const SortingVisualizer = () => {
             Reset
           </Button>
           <Button onClick={sort}>Sort</Button>
-          {renderAlgorithmButtons()}
+          <AlgorithmButtonGroup
+            defaultAlgorithm={radioValue}
+            algorithms={radios}
+            setAlgorithm={setRadioValue}
+          />
         </Col>
       </Row>
       <Row className="justify-content-center">
