@@ -1,7 +1,13 @@
+import { Header } from "./components/Header";
 import SortingVisualizer from "./components/SortingVisualizer";
 
 const App = () => {
-  return <SortingVisualizer />;
+  return (
+    <div>
+      <Header />
+      <SortingVisualizer />
+    </div>
+  );
 };
 
 export default App;
