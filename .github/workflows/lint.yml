@@ -1,4 +1,4 @@
-name: prettier
+name: lint
 
 on:
   push:
@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
 
-      - name: Reformat Code
-        run: npm run format
+      - name: Install modules
+        run: yarn
+
+      - name: Run ESLint
+        run: eslint . --fix
 
       - name: Verify Changed files
         uses: tj-actions/verify-changed-files@v7.1
