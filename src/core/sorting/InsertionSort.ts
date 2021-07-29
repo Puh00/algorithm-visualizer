@@ -11,7 +11,8 @@ export class InsertionSort
 {
   public sort = async (
     bars: Bar[],
-    setState: React.Dispatch<SetStateAction<Bar[]>>
+    setState: React.Dispatch<SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<void> => {
     const n: number = bars.length;
 
@@ -24,7 +25,7 @@ export class InsertionSort
       bars[hole].color = RED;
 
       while (hole > 0 && bars[hole - 1].num > value.num) {
-        await sleep(150);
+        await sleep(delay);
         bars[hole] = bars[hole - 1];
 
         bars[hole].color = GREEN;

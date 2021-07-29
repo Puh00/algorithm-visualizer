@@ -20,7 +20,8 @@ const algorithms = [
 export const SortingVisualizer: React.FC = () => {
   const [bars, setBars] = useState<Bar[]>([]);
   const [num, setNum] = useState<number>(90);
-  const [algorithm, setAlgorithm] = useState("insertion");
+  const [algorithm, setAlgorithm] = useState<string>("insertion");
+  const [delay, setDelay] = useState<number>(20);
 
   useEffect((): void => {
     reset(num, setBars);
@@ -28,7 +29,7 @@ export const SortingVisualizer: React.FC = () => {
 
   const sort = async (): Promise<void> => {
     var sorter: Sorter = getAlgorithm(algorithm);
-    await sorter.sort(bars, setBars);
+    await sorter.sort(bars, setBars, delay);
     await finish(bars, setBars);
   };
 
@@ -65,6 +66,8 @@ export const SortingVisualizer: React.FC = () => {
             reset={reset}
             setBars={setBars}
             sort={sort}
+            delay={delay}
+            setDelay={setDelay}
           />
           <AlgorithmButtonGroup
             defaultAlgorithm={algorithm}

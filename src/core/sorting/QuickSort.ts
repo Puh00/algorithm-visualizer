@@ -8,26 +8,29 @@ import { Singleton } from "../../utils/Singleton";
 export class QuickSort extends Singleton<QuickSort>() implements Sorter {
   sort = async (
     bars: Bar[],
-    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<void> => {
-    await this._sort(bars, 0, bars.length - 1, setState);
+    await this._sort(bars, 0, bars.length - 1, setState, delay);
   };
 
   private _sort = async (
     bars: Bar[],
     start: number,
     end: number,
-    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+    delay: number
   ) => {
     if (start < end) {
       let partitionIndex: number = await this.partition(
         bars,
         start,
         end,
-        setState
+        setState,
+        delay
       );
-      await this._sort(bars, start, partitionIndex - 1, setState);
-      await this._sort(bars, partitionIndex + 1, end, setState);
+      await this._sort(bars, start, partitionIndex - 1, setState, delay);
+      await this._sort(bars, partitionIndex + 1, end, setState, delay);
     }
   };
 
@@ -35,7 +38,8 @@ export class QuickSort extends Singleton<QuickSort>() implements Sorter {
     bars: Bar[],
     start: number,
     end: number,
-    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<number> => {
     let pivotIndex: number = end;
     let pivot = this.getMedian(bars, start, end, setState);
@@ -49,7 +53,7 @@ export class QuickSort extends Singleton<QuickSort>() implements Sorter {
       if (bars[i].num <= pivot) {
         this.swap(bars, i, partitionIndex, setState);
 
-        await this.animation(bars, i, partitionIndex, start, setState);
+        await this.animation(bars, i, partitionIndex, start, setState, delay);
 
         partitionIndex++;
       }
@@ -107,12 +111,13 @@ export class QuickSort extends Singleton<QuickSort>() implements Sorter {
     i: number,
     partitionIndex: number,
     start: number,
-    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<void> => {
     bars[i].color = GREEN;
     bars[partitionIndex].color = RED;
     setState([...bars]);
-    await sleep(50);
+    await sleep(delay);
     if (i !== start) {
       // only reset indices after start
       bars[i].color = BLUE;

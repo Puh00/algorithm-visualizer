@@ -11,7 +11,8 @@ export class SelectionSort
 {
   public sort = async (
     bars: Bar[],
-    setState: React.Dispatch<SetStateAction<Bar[]>>
+    setState: React.Dispatch<SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<void> => {
     const n: number = bars.length;
     for (var i = 0; i < n - 1; i++) {
@@ -30,7 +31,7 @@ export class SelectionSort
       bars[i] = bars[iMin];
       bars[iMin] = temp;
 
-      await sleep(150);
+      await sleep(delay);
       bars[iMin].color = BLUE; // Unmark
       bars[i].color = RED;
       setState([...bars]);

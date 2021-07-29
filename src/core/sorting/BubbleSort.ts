@@ -8,7 +8,8 @@ import { Singleton } from "../../utils/Singleton";
 export class BubbleSort extends Singleton<BubbleSort>() implements Sorter {
   sort = async (
     bars: Bar[],
-    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+    delay: number
   ): Promise<void> => {
     const n: number = bars.length;
     let greatestElementIndex: number = bars.length;
@@ -24,7 +25,7 @@ export class BubbleSort extends Singleton<BubbleSort>() implements Sorter {
           bars[j].color = RED;
           bars[j + 1].color = GREEN;
           setState([...bars]);
-          await sleep(150);
+          await sleep(delay);
           bars[j].color = BLUE;
           bars[j + 1].color = BLUE;
         }
