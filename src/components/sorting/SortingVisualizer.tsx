@@ -17,7 +17,7 @@ const algorithms = [
   { name: "Merge Sort", value: "merge" },
 ];
 
-export const SortingVisualizer = () => {
+export const SortingVisualizer: React.FC = () => {
   const [bars, setBars] = useState<Bar[]>([]);
   const [num, setNum] = useState<number>(90);
   const [algorithm, setAlgorithm] = useState("insertion");
@@ -32,6 +32,7 @@ export const SortingVisualizer = () => {
     await finish(bars, setBars);
   };
 
+  // TODO: move this somewhere else
   const reset = (): void =>
     setBars(
       [...Array(num)].map(() => ({
@@ -47,11 +48,11 @@ export const SortingVisualizer = () => {
     reset();
   };
 
-  // Todo: give unique key to each bar
   const renderBars = (): JSX.Element => (
     <div className="sorting-container">
-      {bars.map((bar: Bar) => (
+      {bars.map((bar: Bar, idx) => (
         <div
+          key={`b-${idx}`}
           className="bar"
           style={{
             backgroundColor: `${bar.color}`,
