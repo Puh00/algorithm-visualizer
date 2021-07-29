@@ -8,6 +8,8 @@ interface Props {
   sort: () => Promise<void>;
   reset: (num: number, setBars: React.Dispatch<SetStateAction<Bar[]>>) => void;
   setBars: React.Dispatch<SetStateAction<Bar[]>>;
+  delay: number;
+  setDelay: React.Dispatch<SetStateAction<number>>;
 }
 
 export const Panel: React.FC<Props> = ({
@@ -16,9 +18,23 @@ export const Panel: React.FC<Props> = ({
   sort,
   reset,
   setBars,
+  delay,
+  setDelay,
 }) => {
   return (
     <span>
+      <label className="mx-2" style={{ width: "10%", textAlign: "left" }}>
+        Delay
+        <input
+          name="foo"
+          type="range"
+          min="1"
+          max="100"
+          value={delay}
+          className="slider"
+          onChange={(e) => setDelay(parseInt(e.target.value))}
+        />
+      </label>
       <input
         className="input-number"
         name="no. bars"
