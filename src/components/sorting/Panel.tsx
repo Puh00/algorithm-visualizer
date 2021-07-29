@@ -20,6 +20,7 @@ export const Panel: React.FC<Props> = ({
   return (
     <span>
       <input
+        className="input-number"
         name="no. bars"
         type="number"
         value={num}

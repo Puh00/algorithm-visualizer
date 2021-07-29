@@ -23,6 +23,12 @@ body {
   margin: max(0.8px, 0.15%);
 }
 
+.input-number {
+  border-radius: 8px;
+  padding: 2px;
+  max-width: 90px;
+}
+
 /* Remove header when below 200px */
 @media only screen and (max-height: 200px) {
   .app-vanish {
