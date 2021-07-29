@@ -17,7 +17,7 @@ jobs:
         run: yarn
 
       - name: Run ESLint
-        run: eslint . --fix
+        run: yarn run eslint . --fix
 
       - name: Verify Changed files
         uses: tj-actions/verify-changed-files@v7.1
