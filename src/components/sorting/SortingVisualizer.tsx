@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { BLUE } from "../../core/model/Color";
 import { Bar } from "../../core/model/Bar";
 import { Sorter } from "../../core/sorting/Sorter";
 import { finish } from "../../core/sorting/Animation";
@@ -8,6 +7,7 @@ import { getAlgorithm } from "../../core/sorting/AlgorithmFactory";
 import { Col, Container, Row } from "react-bootstrap";
 import { AlgorithmButtonGroup } from "./AlgorithmButtonGroup";
 import { Panel } from "./Panel";
+import { initBars as reset } from "../../utils/Randomize";
 
 const algorithms = [
   { name: "Insertion Sort", value: "insertion" },
@@ -23,7 +23,7 @@ export const SortingVisualizer: React.FC = () => {
   const [algorithm, setAlgorithm] = useState("insertion");
 
   useEffect((): void => {
-    reset();
+    reset(num, setBars);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sort = async (): Promise<void> => {
@@ -32,20 +32,11 @@ export const SortingVisualizer: React.FC = () => {
     await finish(bars, setBars);
   };
 
-  // TODO: move this somewhere else
-  const reset = (): void =>
-    setBars(
-      [...Array(num)].map(() => ({
-        num: Math.floor(Math.random() * 80) + 1,
-        color: BLUE,
-      }))
-    );
-
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     let { value, min, max } = e.target;
     const val = Math.max(Number(min), Math.min(Number(max), Number(value)));
     setNum(val);
-    reset();
+    reset(num, setBars);
   };
 
   const renderBars = (): JSX.Element => (
@@ -72,6 +63,7 @@ export const SortingVisualizer: React.FC = () => {
             num={num}
             handleNumberChange={handleNumberChange}
             reset={reset}
+            setBars={setBars}
             sort={sort}
           />
           <AlgorithmButtonGroup

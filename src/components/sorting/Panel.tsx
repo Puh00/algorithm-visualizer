@@ -1,19 +1,21 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { Button } from "react-bootstrap";
+import { Bar } from "../../core/model/Bar";
 
 interface Props {
   num: number;
   handleNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  reset: () => void;
   sort: () => Promise<void>;
+  reset: (num: number, setBars: React.Dispatch<SetStateAction<Bar[]>>) => void;
+  setBars: React.Dispatch<SetStateAction<Bar[]>>;
 }
 
-// TODO: maybe move AlgorithmButton to here instead of directly in SortingVisualizer
 export const Panel: React.FC<Props> = ({
   num,
   handleNumberChange,
-  reset,
   sort,
+  reset,
+  setBars,
 }) => {
   return (
     <span>
@@ -27,7 +29,11 @@ export const Panel: React.FC<Props> = ({
         onChange={handleNumberChange}
         onKeyDown={(e) => e.preventDefault()}
       />
-      <Button onClick={reset} className="mx-2" variant="danger">
+      <Button
+        onClick={() => reset(num, setBars)}
+        className="mx-2"
+        variant="danger"
+      >
         Reset
       </Button>
       <Button onClick={sort}>Sort</Button>
