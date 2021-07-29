@@ -1,12 +1,15 @@
 import { Header } from "./components/common/Header";
 import { SortingVisualizer } from "./components/sorting/SortingVisualizer";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div>
+    <Router>
       <Header />
-      <SortingVisualizer />
-    </div>
+      <Switch>
+        <Route path="/" component={SortingVisualizer} />
+      </Switch>
+    </Router>
   );
 };
 
