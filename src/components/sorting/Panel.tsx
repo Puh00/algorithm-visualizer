@@ -21,20 +21,24 @@ export const Panel: React.FC<Props> = ({
   delay,
   setDelay,
 }) => {
+  const renderRangeSlider = () => (
+    <label className="mx-2" style={{ width: "10%", textAlign: "left" }}>
+      Delay
+      <input
+        name="foo"
+        type="range"
+        min="1"
+        max="100"
+        value={delay}
+        className="slider"
+        onChange={(e) => setDelay(parseInt(e.target.value))}
+      />
+    </label>
+  );
+
   return (
     <span>
-      <label className="mx-2" style={{ width: "10%", textAlign: "left" }}>
-        Delay
-        <input
-          name="foo"
-          type="range"
-          min="1"
-          max="100"
-          value={delay}
-          className="slider"
-          onChange={(e) => setDelay(parseInt(e.target.value))}
-        />
-      </label>
+      {renderRangeSlider()}
       <input
         className="input-number"
         name="no. bars"
