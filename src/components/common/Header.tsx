@@ -1,6 +1,8 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import React from 'react';
 
-export const Header = () => {
+import { Container, Nav, Navbar } from 'react-bootstrap';
+
+export const Header = (): JSX.Element => {
   return (
     <Navbar expand="md" bg="dark" variant="dark" className="app-vanish">
       <Container>

@@ -1,5 +1,6 @@
-import React from "react";
-import { ButtonGroup, ToggleButton } from "react-bootstrap";
+import React from 'react';
+
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 interface Algorithm {
   name: string;
@@ -16,7 +17,7 @@ export const AlgorithmButtonGroup: React.FC<Props> = ({
   defaultAlgorithm,
   algorithms,
   setAlgorithm,
-}) => {
+}: Props) => {
   return (
     <ButtonGroup className="p-3">
       {algorithms.map((alg) => (

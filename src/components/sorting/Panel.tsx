@@ -1,6 +1,8 @@
-import React, { SetStateAction } from "react";
-import { Button } from "react-bootstrap";
-import { Bar } from "../../core/model/Bar";
+import React, { SetStateAction } from 'react';
+
+import { Button } from 'react-bootstrap';
+
+import { Bar } from '../../core/model/Bar';
 
 interface Props {
   num: number;
@@ -20,9 +22,9 @@ export const Panel: React.FC<Props> = ({
   setBars,
   delay,
   setDelay,
-}) => {
-  const renderRangeSlider = () => (
-    <label className="mx-2" style={{ width: "10%", textAlign: "left" }}>
+}: Props) => {
+  const renderRangeSlider = (): JSX.Element => (
+    <label className="mx-2" style={{ width: '10%', textAlign: 'left' }}>
       Delay
       <input
         name="foo"

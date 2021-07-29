@@ -1,7 +1,8 @@
-import React, { SetStateAction } from "react";
-import { Bar } from "../model/Bar";
-import { sleep } from "../../utils/Sleep";
-import { RED, GREEN, BLUE } from "../model/Color";
+import React, { SetStateAction } from 'react';
+
+import { sleep } from '../../utils/Sleep';
+import { Bar } from '../model/Bar';
+import { RED, GREEN, BLUE } from '../model/Color';
 
 export const selectionSort = async (
   bars: Bar[],
@@ -9,9 +10,9 @@ export const selectionSort = async (
   delay: number
 ): Promise<void> => {
   const n: number = bars.length;
-  for (var i = 0; i < n - 1; i++) {
-    var iMin: number = i;
-    for (var j: number = i + 1; j < n; j++) {
+  for (let i = 0; i < n - 1; i++) {
+    let iMin: number = i;
+    for (let j: number = i + 1; j < n; j++) {
       if (bars[j].num < bars[iMin].num) iMin = j;
 
       if (j === n - 1) {

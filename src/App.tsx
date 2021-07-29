@@ -1,8 +1,11 @@
-import { Header } from "./components/common/Header";
-import { SortingVisualizer } from "./components/sorting/SortingVisualizer";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react';
 
-const App = () => {
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { Header } from './components/common/Header';
+import { SortingVisualizer } from './components/sorting/SortingVisualizer';
+
+const App = (): JSX.Element => {
   return (
     <Router>
       <Header />

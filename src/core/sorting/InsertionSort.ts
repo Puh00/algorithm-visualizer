@@ -1,7 +1,8 @@
-import React, { SetStateAction } from "react";
-import { Bar } from "../model/Bar";
-import { sleep } from "../../utils/Sleep";
-import { RED, GREEN } from "../model/Color";
+import React, { SetStateAction } from 'react';
+
+import { sleep } from '../../utils/Sleep';
+import { Bar } from '../model/Bar';
+import { RED, GREEN } from '../model/Color';
 
 export const insertionSort = async (
   bars: Bar[],
@@ -12,9 +13,9 @@ export const insertionSort = async (
 
   bars[0].color = RED;
 
-  for (var i = 1; i < n; i++) {
-    var value: Bar = bars[i];
-    var hole: number = i;
+  for (let i = 1; i < n; i++) {
+    const value: Bar = bars[i];
+    let hole: number = i;
 
     bars[hole].color = RED;
 

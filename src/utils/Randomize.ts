@@ -1,6 +1,7 @@
-import React, { SetStateAction } from "react";
-import { Bar } from "../core/model/Bar";
-import { BLUE } from "../core/model/Color";
+import React, { SetStateAction } from 'react';
+
+import { Bar } from '../core/model/Bar';
+import { BLUE } from '../core/model/Color';
 
 export const initBars = (
   num: number,

@@ -1,7 +1,8 @@
-import React from "react";
-import { Bar } from "../model/Bar";
-import { sleep } from "../../utils/Sleep";
-import { RED, GREEN, BLUE } from "../model/Color";
+import React from 'react';
+
+import { sleep } from '../../utils/Sleep';
+import { Bar } from '../model/Bar';
+import { RED, GREEN, BLUE } from '../model/Color';
 
 export const bubbleSort = async (
   bars: Bar[],
@@ -14,7 +15,7 @@ export const bubbleSort = async (
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n - 1; j++) {
       if (bars[j].num > bars[j + 1].num) {
-        let swap = bars[j];
+        const swap = bars[j];
         bars[j] = bars[j + 1];
         bars[j + 1] = swap;
 
