@@ -1,17 +1,24 @@
-import { Sorter } from "./Sorter";
-import { InsertionSort } from "./InsertionSort";
-import { SelectionSort } from "./SelectionSort";
-import { BubbleSort } from "./BubbleSort";
-import { QuickSort } from "./QuickSort";
-import { MergeSort } from "./MergeSort";
+import React, { SetStateAction } from "react";
+import { Bar } from "../model/Bar";
+import { bubbleSort } from "./BubbleSort";
+import { insertionSort } from "./InsertionSort";
+import { mergeSort } from "./MergeSort";
+import { quicksort } from "./QuickSort";
+import { selectionSort } from "./SelectionSort";
 
-export const getAlgorithm = (algorithmType: string): Sorter => {
-  var sorter: Sorter;
-  if (algorithmType === "selection") sorter = SelectionSort.getInstance();
-  else if (algorithmType === "insertion") sorter = InsertionSort.getInstance();
-  else if (algorithmType === "bubble") sorter = BubbleSort.getInstance();
-  else if (algorithmType === "quick") sorter = QuickSort.getInstance();
-  else if (algorithmType === "merge") sorter = MergeSort.getInstance();
+type func = (
+  bars: Bar[],
+  setState: React.Dispatch<SetStateAction<Bar[]>>,
+  delay: number
+) => Promise<void>;
+
+export const getAlgorithm = (algorithmType: string): func => {
+  let sorter: func;
+  if (algorithmType === "selection") sorter = selectionSort;
+  else if (algorithmType === "insertion") sorter = insertionSort;
+  else if (algorithmType === "bubble") sorter = bubbleSort;
+  else if (algorithmType === "quick") sorter = quicksort;
+  else if (algorithmType === "merge") sorter = mergeSort;
   else throw new Error("Incorrect type for sorting algorithm");
   return sorter;
 };

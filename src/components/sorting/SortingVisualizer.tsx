@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
 import { Bar } from "../../core/model/Bar";
-import { Sorter } from "../../core/sorting/Sorter";
 import { finish } from "../../core/sorting/Animation";
-import { getAlgorithm } from "../../core/sorting/AlgorithmFactory";
 import { Col, Container, Row } from "react-bootstrap";
 import { AlgorithmButtonGroup } from "./AlgorithmButtonGroup";
 import { Panel } from "./Panel";
 import { initBars as reset } from "../../utils/Randomize";
+import { getAlgorithm } from "../../core/sorting/AlgorithmFactory";
 
 const algorithms = [
   { name: "Insertion Sort", value: "insertion" },
@@ -28,8 +27,8 @@ export const SortingVisualizer: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sort = async (): Promise<void> => {
-    var sorter: Sorter = getAlgorithm(algorithm);
-    await sorter.sort(bars, setBars, delay);
+    let sorter = getAlgorithm(algorithm);
+    await sorter(bars, setBars, delay);
     await finish(bars, setBars);
   };
 
