@@ -1,6 +1,6 @@
 import React, { SetStateAction } from 'react';
 
-import { sleep } from '../../utils';
+import { sleep, swap } from '../../utils';
 import { Bar } from '../model/Bar';
 import { RED, GREEN, BLUE } from '../model/Color';
 
@@ -22,9 +22,7 @@ export const selectionSort = async (
       }
     }
 
-    const temp = bars[i];
-    bars[i] = bars[iMin];
-    bars[iMin] = temp;
+    swap(bars, i, iMin);
 
     await sleep(delay);
     bars[iMin].color = BLUE; // Unmark

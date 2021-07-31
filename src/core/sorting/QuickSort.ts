@@ -1,20 +1,8 @@
 import React from 'react';
 
-import { sleep } from '../../utils';
+import { sleep, swap } from '../../utils';
 import { Bar } from '../model/Bar';
 import { RED, GREEN, BLUE } from '../model/Color';
-
-const swap = (
-  arr: Bar[],
-  x: number,
-  y: number,
-  setState: React.Dispatch<React.SetStateAction<Bar[]>>
-): void => {
-  const temp: Bar = arr[x];
-  arr[x] = arr[y];
-  arr[y] = temp;
-  setState([...arr]);
-};
 
 const animation = async (
   bars: Bar[],
@@ -52,10 +40,9 @@ const getMedian = (
   setState: React.Dispatch<React.SetStateAction<Bar[]>>
 ): number => {
   const midpoint: number = Math.floor((start + end) / 2);
-  if (bars[start].num > bars[midpoint].num)
-    swap(bars, start, midpoint, setState);
-  if (bars[start] > bars[end]) swap(bars, start, end, setState);
-  if (bars[midpoint] > bars[end]) swap(bars, midpoint, end, setState);
+  if (bars[start].num > bars[midpoint].num) swap(bars, start, midpoint);
+  if (bars[start] > bars[end]) swap(bars, start, end);
+  if (bars[midpoint] > bars[end]) swap(bars, midpoint, end);
 
   swap(bars, midpoint, end, setState);
   return bars[end].num;

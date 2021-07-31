@@ -1,22 +1,10 @@
 import React from 'react';
 
-import { sleep } from '../../utils';
+import { sleep, swap } from '../../utils';
 import { Bar } from '../model/Bar';
 import { RED, BLUE } from '../model/Color';
 
 const nextGap = (gap: number): number => (gap <= 1 ? 0 : Math.ceil(gap / 2.0));
-
-const swap = async (
-  arr: Bar[],
-  x: number,
-  y: number,
-  setState: React.Dispatch<React.SetStateAction<Bar[]>>
-): Promise<void> => {
-  const temp: Bar = arr[x];
-  arr[x] = arr[y];
-  arr[y] = temp;
-  setState([...arr]);
-};
 
 const animation = async (
   bars: Bar[],
@@ -59,7 +47,7 @@ const inPlaceMerge = async (
     for (let i = start; i + gap <= end; i++) {
       const j = i + gap;
       if (bars[i].num > bars[j].num) {
-        await swap(bars, i, j, setState);
+        swap(bars, i, j);
         await animation(bars, i, j, setState, delay);
       }
     }

@@ -1,8 +1,22 @@
 import React from 'react';
 
-import { sleep } from '../../utils';
+import { sleep, swap } from '../../utils';
 import { Bar } from '../model/Bar';
 import { RED, GREEN, BLUE } from '../model/Color';
+
+const animation = async (
+  bars: Bar[],
+  j: number,
+  setState: React.Dispatch<React.SetStateAction<Bar[]>>,
+  delay: number
+): Promise<void> => {
+  bars[j].color = RED;
+  bars[j + 1].color = GREEN;
+  setState([...bars]);
+  await sleep(delay);
+  bars[j].color = BLUE;
+  bars[j + 1].color = BLUE;
+};
 
 export const bubbleSort = async (
   bars: Bar[],
@@ -15,17 +29,8 @@ export const bubbleSort = async (
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n - 1; j++) {
       if (bars[j].num > bars[j + 1].num) {
-        const swap = bars[j];
-        bars[j] = bars[j + 1];
-        bars[j + 1] = swap;
-
-        // animation
-        bars[j].color = RED;
-        bars[j + 1].color = GREEN;
-        setState([...bars]);
-        await sleep(delay);
-        bars[j].color = BLUE;
-        bars[j + 1].color = BLUE;
+        swap(bars, j, j + 1);
+        await animation(bars, j, setState, delay);
       }
 
       if (j === greatestElementIndex - 2) {
