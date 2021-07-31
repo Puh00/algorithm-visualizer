@@ -16,6 +16,7 @@ const algorithms = [
   { name: 'Bubble Sort', value: 'bubble' },
   { name: 'Quicksort', value: 'quick' },
   { name: 'Merge Sort', value: 'merge' },
+  { name: 'Cocktail Sort', value: 'cocktail' },
 ];
 
 export const SortingVisualizer: React.FC = () => {
