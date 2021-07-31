@@ -1,6 +1,6 @@
 import React, { SetStateAction } from 'react';
 
-import { sleep } from '../../utils/Sleep';
+import { sleep } from '../../utils';
 import { Bar } from '../model/Bar';
 import { GREEN } from '../model/Color';
 

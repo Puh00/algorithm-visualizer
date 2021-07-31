@@ -6,7 +6,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Bar } from '../../core/model/Bar';
 import { getAlgorithm } from '../../core/sorting/AlgorithmFactory';
 import { finish } from '../../core/sorting/Animation';
-import { initBars as reset } from '../../utils/Randomize';
+import { initBars as reset } from '../../utils';
 import { AlgorithmButtonGroup } from './AlgorithmButtonGroup';
 import { Panel } from './Panel';
 
