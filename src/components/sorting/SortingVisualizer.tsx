@@ -4,9 +4,9 @@ import '../../App.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { Bar } from '../../core/model/Bar';
-import { BLUE } from '../../core/model/Color';
+import { BLUE, GREEN } from '../../core/model/Color';
 import { getAlgorithm } from '../../core/sorting/AlgorithmFactory';
-import { finish } from '../../core/sorting/Animation';
+import { sleep } from '../../utils';
 import { AlgorithmButtonGroup } from './AlgorithmButtonGroup';
 import { Panel } from './Panel';
 
@@ -38,6 +38,18 @@ export const SortingVisualizer: React.FC = () => {
   useEffect((): void => {
     resetBars(num, setBars);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Green progressive animation
+  const finish = async (
+    bars: Bar[],
+    setState: React.Dispatch<React.SetStateAction<Bar[]>>
+  ): Promise<void> => {
+    for (let i = 0; i < bars.length; i++) {
+      bars[i].color = GREEN;
+      setState([...bars]);
+      await sleep(1);
+    }
+  };
 
   const sort = async (): Promise<void> => {
     const sorter = getAlgorithm(algorithm);
