@@ -20,9 +20,6 @@ export const cocktailSort = async (
     for (let i = start; i < end - 1; i++) {
       if (bars[i].num > bars[i + 1].num) {
         swap(bars, i, i + 1);
-        bars[i].color = BLUE;
-        bars[i + 1].color = GREEN;
-        setState([...bars]);
         swapped = true;
       }
       bars[i].color = BLUE;
