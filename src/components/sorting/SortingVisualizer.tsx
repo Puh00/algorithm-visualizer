@@ -17,6 +17,7 @@ const algorithms = [
   { name: 'Quicksort', value: 'quick' },
   { name: 'Merge Sort', value: 'merge' },
   { name: 'Cocktail Sort', value: 'cocktail' },
+  { name: 'Heap Sort', value: 'heap' },
 ];
 
 export const SortingVisualizer: React.FC = () => {

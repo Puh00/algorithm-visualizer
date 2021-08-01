@@ -3,6 +3,7 @@ import React, { SetStateAction } from 'react';
 import { Bar } from '../model/Bar';
 import { bubbleSort } from './BubbleSort';
 import { cocktailSort } from './CocktailSort';
+import { heapSort } from './HeapSort';
 import { insertionSort } from './InsertionSort';
 import { mergeSort } from './MergeSort';
 import { quicksort } from './QuickSort';
@@ -22,6 +23,7 @@ export const getAlgorithm = (algorithmType: string): func => {
   else if (algorithmType === 'quick') sorter = quicksort;
   else if (algorithmType === 'merge') sorter = mergeSort;
   else if (algorithmType === 'cocktail') sorter = cocktailSort;
+  else if (algorithmType === 'heap') sorter = heapSort;
   else throw new Error('Incorrect type for sorting algorithm');
   return sorter;
 };
