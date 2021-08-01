@@ -8,7 +8,7 @@ interface Props {
   num: number;
   handleNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   sort: () => Promise<void>;
-  reset: (num: number, setBars: React.Dispatch<SetStateAction<Bar[]>>) => void;
+  reset: () => void;
   setBars: React.Dispatch<SetStateAction<Bar[]>>;
   delay: number;
   setDelay: React.Dispatch<SetStateAction<number>>;
@@ -19,7 +19,6 @@ export const Panel: React.FC<Props> = ({
   handleNumberChange,
   sort,
   reset,
-  setBars,
   delay,
   setDelay,
 }: Props) => {
@@ -52,11 +51,7 @@ export const Panel: React.FC<Props> = ({
         onChange={handleNumberChange}
         onKeyDown={(e) => e.preventDefault()}
       />
-      <Button
-        onClick={() => reset(num, setBars)}
-        className="mx-2"
-        variant="danger"
-      >
+      <Button onClick={reset} className="mx-2" variant="danger">
         Reset
       </Button>
       <Button onClick={sort}>Sort</Button>

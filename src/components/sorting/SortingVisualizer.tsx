@@ -26,10 +26,7 @@ export const SortingVisualizer: React.FC = () => {
   const [algorithm, setAlgorithm] = useState<string>('insertion');
   const [delay, setDelay] = useState<number>(20);
 
-  const resetBars = (
-    num: number,
-    setBars: React.Dispatch<React.SetStateAction<Bar[]>>
-  ): void =>
+  const resetBars = (): void =>
     setBars(
       [...Array(num)].map(() => ({
         num: Math.floor(Math.random() * 80) + 1,
@@ -38,8 +35,8 @@ export const SortingVisualizer: React.FC = () => {
     );
 
   useEffect((): void => {
-    resetBars(num, setBars);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    resetBars();
+  }, [num]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Green progressive animation
   const finish = async (
@@ -61,9 +58,7 @@ export const SortingVisualizer: React.FC = () => {
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, min, max } = e.target;
-    const val = Math.max(Number(min), Math.min(Number(max), Number(value)));
-    setNum(val);
-    resetBars(num, setBars);
+    setNum(Math.max(Number(min), Math.min(Number(max), Number(value))));
   };
 
   const renderBars = (): JSX.Element => (
