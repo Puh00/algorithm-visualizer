@@ -29,7 +29,7 @@ module.exports = {
       'error',
       { allowExpressions: true },
     ],
-    'max-len': ['warn', { code: 80 }],
+    'max-len': ['warn', { code: 90 }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'prettier/prettier': [
