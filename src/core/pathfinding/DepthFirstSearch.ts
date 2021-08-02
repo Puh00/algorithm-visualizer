@@ -4,9 +4,9 @@ import { sleep } from '../../utils';
 import { Cell } from '../model/Cell';
 import { BLUE, RED } from '../model/Color';
 
-// Direction vectors: [Left, Up, Right, Down]
-const xDir = [-1, 0, 1, 0];
-const yDir = [0, 1, 0, -1];
+// Direction vectors: [Up, Right, Down, Left]
+const yDir = [-1, 0, 1, 0];
+const xDir = [0, 1, 0, -1];
 
 const isValid = (
   gridSize: number,
@@ -64,10 +64,10 @@ export const DFS = async (
 
     // push adjacent cells
     for (let i = 0; i < 4; i++) {
-      const x = row + xDir[i];
-      const y = col + yDir[i];
+      const y = row + yDir[i];
+      const x = col + xDir[i];
       stack.push([x, y]);
-      console.log(`PUSH: x: ${x}, y: ${y}`);
+      console.log(`PUSH: row: ${y}, col: ${x}`);
     }
   }
   console.log('End of trail');
