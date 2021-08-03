@@ -2,11 +2,14 @@ import React from 'react';
 
 import { sleep } from '../../utils';
 import { Cell } from '../model/Cell';
-import { BLUE, RED } from '../model/Color';
 
 // Direction vectors: [Up, Right, Down, Left]
 const yDir = [-1, 0, 1, 0];
 const xDir = [0, 1, 0, -1];
+type coord = {
+  x: number;
+  y: number;
+};
 
 const isValid = (
   gridSize: number,
@@ -24,7 +27,9 @@ const isValid = (
 export const resetGrid = (size: number): Cell[][] => {
   return [...Array(size)].map(() => {
     return [...Array(size)].map(() => ({
-      color: BLUE,
+      isWall: false,
+      isActive: false,
+      isPath: false,
     }));
   });
 };
@@ -39,8 +44,8 @@ export const DFS = async (
     Array(grid.length).fill(false)
   );
 
-  const stack = [];
-  stack.push([row, col]);
+  const stack: coord[] = [];
+  stack.push({ x: row, y: col });
 
   while (stack.length !== 0) {
     const curr = stack.pop();
@@ -48,25 +53,25 @@ export const DFS = async (
       console.log('no data');
       continue;
     }
-    row = curr[0];
-    col = curr[1];
+    row = curr.x;
+    col = curr.y;
 
     if (!isValid(grid.length, visited, row, col)) continue;
     console.log(`r: ${row}, c: ${col}`);
 
     visited[row][col] = true;
 
-    grid[row][col].color = RED;
+    grid[row][col].isActive = true;
     setState([...grid]);
     await sleep(1000);
-    grid[row][col].color = BLUE;
+    grid[row][col].isActive = false;
     setState([...grid]);
 
     // push adjacent cells
     for (let i = 0; i < 4; i++) {
       const y = row + yDir[i];
       const x = col + xDir[i];
-      stack.push([x, y]);
+      stack.push({ x: x, y: y });
       console.log(`PUSH: row: ${y}, col: ${x}`);
     }
   }
