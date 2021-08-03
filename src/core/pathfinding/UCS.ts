@@ -73,9 +73,13 @@ export const UCS = async (
     if (isSameCoord(entry.node, goal))
       return { success: true, path: extractPath(entry) };
 
-    if (!visited[entry.node.y][entry.node.x]) {
+    if (
+      !visited[entry.node.y][entry.node.x] &&
+      !grid[entry.node.y][entry.node.x].isWall
+    ) {
       visited[entry.node.y][entry.node.x] = true;
 
+      // mark visited cells
       grid[entry.node.y][entry.node.x].isActive = true;
       setState([...grid]);
       await sleep(10);
