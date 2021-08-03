@@ -3,12 +3,7 @@ import React from 'react';
 import PriorityQueue from 'ts-priority-queue';
 
 import { sleep } from '../../utils';
-import { Cell } from '../model/Cell';
-
-interface Coord {
-  x: number;
-  y: number;
-}
+import { Cell, Coord } from '../model/Cell';
 
 interface PQEntry {
   node: Coord;
@@ -33,7 +28,6 @@ const adjacentCoords = (c: Coord, n: number, m: number): Coord[] => {
     const col = c.x + xDir[i];
     if (row >= 0 && col >= 0 && row < n && col < m) {
       coords.push({ x: col, y: row });
-      console.log(`PUSH: x: ${col}, y: ${row}`);
     }
   }
   return coords;
@@ -82,10 +76,9 @@ export const UCS = async (
     if (!visited[entry.node.y][entry.node.x]) {
       visited[entry.node.y][entry.node.x] = true;
 
-      console.log(`x: ${entry.node.x}, y: ${entry.node.y}`);
       grid[entry.node.y][entry.node.x].isActive = true;
       setState([...grid]);
-      await sleep(500);
+      await sleep(10);
 
       for (const c of adjacentCoords(entry.node, n, m)) {
         const costToNext = entry.costToHere + 1;

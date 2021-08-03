@@ -24,16 +24,6 @@ const isValid = (
   return true;
 };
 
-export const resetGrid = (size: number): Cell[][] => {
-  return [...Array(size)].map(() => {
-    return [...Array(size)].map(() => ({
-      isWall: false,
-      isActive: false,
-      isPath: false,
-    }));
-  });
-};
-
 export const DFS = async (
   row: number,
   col: number,

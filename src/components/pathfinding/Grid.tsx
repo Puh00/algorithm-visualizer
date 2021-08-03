@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Cell } from '../../core/model/Cell';
-import { DFS, resetGrid } from '../../core/pathfinding/DepthFirstSearch';
 import { UCS, Result } from '../../core/pathfinding/UCS';
 import { sleep } from '../../utils';
 import { CellButton } from './CellButton';
 
 interface Props {
   SIZE: number;
-  draw: boolean;
 }
 
 const finish = async (
@@ -25,17 +23,45 @@ const finish = async (
   }
 };
 
-export const Grid: React.FC<Props> = ({ SIZE, draw }: Props) => {
+const resetGrid = (size: number): Cell[][] => {
+  return [...Array(size)].map((_, i) => {
+    return [...Array(size)].map((_, j) => ({
+      coord: { x: j, y: i },
+      isWall: false,
+      isActive: false,
+      isPath: false,
+    }));
+  });
+};
+
+export const Grid: React.FC<Props> = ({ SIZE }: Props) => {
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
   const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(SIZE));
 
   const algo = async (): Promise<void> => {
     // await DFS(1, 1, grid, setGrid);
-    await UCS({ x: 0, y: 1 }, { x: 4, y: 0 }, grid, setGrid).then(
+    await UCS({ x: 10, y: 10 }, { x: 4, y: 0 }, grid, setGrid).then(
       async (res) => {
         await finish(res, grid, setGrid);
       }
     );
+  };
+
+  const toggleWall = (row: number, col: number): void => {
+    const cell = grid[row][col];
+    cell.isWall = !cell.isWall;
+    setGrid([...grid]);
+  };
+
+  const handleMouseUp = (): void => setMouseDown(false);
+
+  const handleMouseDown = (row: number, col: number): void => {
+    toggleWall(row, col);
+    setMouseDown(true);
+  };
+
+  const handleMouseEnter = (row: number, col: number): void => {
+    if (mouseDown) toggleWall(row, col);
   };
 
   return (
@@ -55,7 +81,14 @@ export const Grid: React.FC<Props> = ({ SIZE, draw }: Props) => {
         {grid.map((row, i) => (
           <div key={i}>
             {row.map((c, j) => (
-              <CellButton cell={c} mouseDown={mouseDown} draw={draw} key={j} />
+              <CellButton
+                cell={c}
+                key={j}
+                mouseDown={mouseDown}
+                onMouseDown={handleMouseDown}
+                onMouseEnter={handleMouseEnter}
+                onMouseUp={handleMouseUp}
+              />
             ))}
           </div>
         ))}

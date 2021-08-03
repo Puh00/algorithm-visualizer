@@ -5,16 +5,18 @@ import { Cell } from '../../core/model/Cell';
 interface Props {
   cell: Cell;
   mouseDown: boolean;
-  draw: boolean;
+  onMouseDown: (row: number, col: number) => void;
+  onMouseEnter: (row: number, col: number) => void;
+  onMouseUp: () => void;
 }
 
 export const CellButton: React.FC<Props> = ({
   cell,
   mouseDown,
-  draw,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp,
 }: Props) => {
-  const [colored, setColored] = React.useState(false);
-
   const cellColor = (cell: Cell): string => {
     if (cell.isWall) return 'grey';
     else if (cell.isPath) return 'Chartreuse';
@@ -30,12 +32,10 @@ export const CellButton: React.FC<Props> = ({
         backgroundColor: cellColor(cell),
       }}
       onMouseEnter={() => {
-        if (mouseDown) {
-          if (draw) {
-            cell.isWall = true;
-          } else setColored(false);
-        }
+        if (mouseDown) onMouseEnter(cell.coord.y, cell.coord.x);
       }}
+      onMouseDown={() => onMouseDown(cell.coord.y, cell.coord.x)}
+      onMouseUp={onMouseUp}
     />
   );
 };
