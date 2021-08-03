@@ -6,7 +6,7 @@ import { sleep } from '../../utils';
 import { Cell, Coord } from '../model/Cell';
 
 interface PQEntry {
-  node: Coord;
+  coord: Coord;
   costToHere: number;
   backPointer: PQEntry | null;
 }
@@ -37,11 +37,16 @@ const adjacentCoords = (c: Coord, n: number, m: number): Coord[] => {
 const isSameCoord = (c1: Coord, c2: Coord): boolean =>
   c1.x === c2.x && c1.y === c2.y;
 
+/**
+ * Extract the full path from start to goal
+ * @param entry the final priority queue entry
+ * @returns the path from start to goal as a list of cells
+ */
 const extractPath = (entry: PQEntry): Coord[] => {
   const path = [];
   let pqe: PQEntry | null = entry;
   while (pqe !== null) {
-    path.unshift(pqe.node);
+    path.unshift(pqe.coord);
     pqe = pqe.backPointer;
   }
   return path;
@@ -65,28 +70,28 @@ export const UCS = async (
   });
 
   // Add starting cell to be searched
-  pq.queue({ node: start, costToHere: 0, backPointer: null });
+  pq.queue({ coord: start, costToHere: 0, backPointer: null });
 
   while (pq.length !== 0) {
     const entry = pq.dequeue();
 
-    if (isSameCoord(entry.node, goal))
+    if (isSameCoord(entry.coord, goal))
       return { success: true, path: extractPath(entry) };
 
     if (
-      !visited[entry.node.y][entry.node.x] &&
-      !grid[entry.node.y][entry.node.x].isWall
+      !visited[entry.coord.y][entry.coord.x] &&
+      !grid[entry.coord.y][entry.coord.x].isWall
     ) {
-      visited[entry.node.y][entry.node.x] = true;
+      visited[entry.coord.y][entry.coord.x] = true;
 
       // mark visited cells
-      grid[entry.node.y][entry.node.x].isActive = true;
+      grid[entry.coord.y][entry.coord.x].isActive = true;
       setState([...grid]);
       await sleep(10);
 
-      for (const c of adjacentCoords(entry.node, n, m)) {
+      for (const c of adjacentCoords(entry.coord, n, m)) {
         const costToNext = entry.costToHere + 1;
-        pq.queue({ node: c, costToHere: costToNext, backPointer: entry });
+        pq.queue({ coord: c, costToHere: costToNext, backPointer: entry });
       }
     }
   }
