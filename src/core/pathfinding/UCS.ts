@@ -67,7 +67,7 @@ export const UCS = async (
   const visited: boolean[][] = Array.from(Array(n), () => Array(m).fill(false));
 
   const pq = new PriorityQueue<PQEntry>({
-    comparator: (entry) => entry.costToHere,
+    comparator: (p1, p2) => p1.costToHere - p2.costToHere,
   });
 
   // Add starting cell to be searched
