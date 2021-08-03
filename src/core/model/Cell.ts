@@ -1,6 +1,5 @@
-import { Color } from './Color';
-
-// add "isWall" when it's time for WALLS
 export interface Cell {
-  color: Color;
+  isActive: boolean;
+  isPath: boolean;
+  isWall: boolean;
 }

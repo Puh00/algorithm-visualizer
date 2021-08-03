@@ -15,18 +15,25 @@ export const CellButton: React.FC<Props> = ({
 }: Props) => {
   const [colored, setColored] = React.useState(false);
 
+  const cellColor = (cell: Cell): string => {
+    if (cell.isWall) return 'grey';
+    else if (cell.isPath) return 'Chartreuse';
+    else if (cell.isActive) return 'red';
+    else return '';
+  };
+
   return (
     <button
       style={{
         width: '40px',
         height: '40px',
-        /* background: colored ? 'red' : 'none', */
-        backgroundColor: cell.color,
+        backgroundColor: cellColor(cell),
       }}
       onMouseEnter={() => {
         if (mouseDown) {
-          if (draw) setColored(true);
-          else setColored(false);
+          if (draw) {
+            cell.isWall = true;
+          } else setColored(false);
         }
       }}
     />
