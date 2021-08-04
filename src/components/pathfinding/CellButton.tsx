@@ -29,8 +29,9 @@ export const CellButton: React.FC<Props> = ({
   return (
     <button
       style={{
-        width: '40px',
-        height: '40px',
+        marginBottom: '-3px',
+        width: '30px',
+        height: '30px',
         backgroundColor: cellColor(cell),
       }}
       onMouseEnter={() => {

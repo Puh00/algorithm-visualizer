@@ -9,8 +9,6 @@ import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Grid } from './Grid';
 import { Panel } from './Panel';
 
-const gridSize = 30;
-
 const algorithms = [
   { name: 'UCS', value: 'ucs' },
   { name: 'A*', value: 'astar' },
@@ -21,9 +19,18 @@ const modes = [
   { name: 'Finish', value: 'finish' },
 ];
 
-const resetGrid = (size: number, start: Coord, finish: Coord): Cell[][] => {
-  const grid: Cell[][] = [...Array(size)].map((_, i) => {
-    return [...Array(size)].map((_, j) => ({
+// Calculate how many cells fit the screen horizontally and vertically
+const calculateCells = (): [number, number] => {
+  const noHorizontalCells = Math.floor((window.innerHeight - 160) / 30);
+  const noVerticalCells = Math.floor(window.innerWidth / 30);
+  return [noHorizontalCells, noVerticalCells];
+};
+
+const resetGrid = (start: Coord, finish: Coord): Cell[][] => {
+  // n * m size of the grid
+  const [n, m] = calculateCells();
+  const grid: Cell[][] = [...Array(n)].map((_, i) => {
+    return [...Array(m)].map((_, j) => ({
       coord: { x: j, y: i },
       isActive: false,
       isPath: false,
@@ -53,17 +60,21 @@ const drawPath = async (
 };
 
 export const PathfindingVisualizer: React.FC = () => {
-  // to disable moving starting and finish cells during search
   const [algorithm, setAlgorithm] = React.useState<string>('ucs');
+  // to disable moving starting and finish cells during search
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
   const [finish, setFinish] = React.useState<Coord>({ x: 4, y: 0 });
-  const [grid, setGrid] = React.useState<Cell[][]>(
-    resetGrid(gridSize, start, finish)
-  );
+  const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(start, finish));
   const [mode, setMode] = React.useState<string>('wall');
 
-  const reset = (): void => setGrid(resetGrid(gridSize, start, finish));
+  React.useState(() => {
+    console.log(`W: ${Math.floor(window.innerWidth / 30)}`);
+    console.log(`H: ${Math.floor(window.innerHeight / 30)}`);
+    console.log(`Height: ${window.innerHeight}`);
+  });
+
+  const reset = (): void => setGrid(resetGrid(start, finish));
 
   const search = async (): Promise<void> => {
     const searcher = getPathfindingAlgorithm(algorithm);
