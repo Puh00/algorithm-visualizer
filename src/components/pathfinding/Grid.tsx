@@ -43,7 +43,6 @@ export const Grid: React.FC<Props> = ({
   const moveFinish = (row: number, col: number): void => {
     grid[finish.y][finish.x].isFinish = false;
     const cell = grid[row][col];
-    console.dir(cell.coord);
     cell.isFinish = true;
     setFinish(cell.coord);
     setGrid([...grid]);

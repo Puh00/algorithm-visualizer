@@ -4,6 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
+import { astar } from '../../core/pathfinding/Astar';
 import { UCS } from '../../core/pathfinding/UCS';
 import { sleep } from '../../utils';
 import { Grid } from './Grid';
@@ -62,7 +63,7 @@ export const PathfindingVisualizer: React.FC = () => {
 
   const search = async (): Promise<void> => {
     setSearching(true);
-    await UCS(start, finish, grid, setGrid).then(async (res) => {
+    await astar(start, finish, grid, setGrid).then(async (res) => {
       if (res.success) await drawPath(res, grid, setGrid);
     });
     setSearching(false);
