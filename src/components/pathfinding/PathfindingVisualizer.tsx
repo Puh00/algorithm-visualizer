@@ -21,16 +21,16 @@ const modes = [
 
 // Calculate how many cells fit the screen horizontally and vertically
 const calculateCells = (): [number, number] => {
-  const noHorizontalCells = Math.floor((window.innerHeight - 160) / 30);
-  const noVerticalCells = Math.floor(window.innerWidth / 30);
+  const noHorizontalCells = Math.floor(window.innerWidth / 30);
+  const noVerticalCells = Math.floor((window.innerHeight - 160) / 30);
   return [noHorizontalCells, noVerticalCells];
 };
 
 const resetGrid = (start: Coord, finish: Coord): Cell[][] => {
   // n * m size of the grid
   const [n, m] = calculateCells();
-  const grid: Cell[][] = [...Array(n)].map((_, i) => {
-    return [...Array(m)].map((_, j) => ({
+  const grid: Cell[][] = [...Array(m)].map((_, i) => {
+    return [...Array(n)].map((_, j) => ({
       coord: { x: j, y: i },
       isActive: false,
       isPath: false,
