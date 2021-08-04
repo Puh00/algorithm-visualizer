@@ -3,7 +3,8 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { Cell, Coord } from '../../core/model/Cell';
-import { UCS, Result } from '../../core/pathfinding/UCS';
+import { Result } from '../../core/model/PQEntry';
+import { UCS } from '../../core/pathfinding/UCS';
 import { sleep } from '../../utils';
 import { Grid } from './Grid';
 import { Panel } from './Panel';
