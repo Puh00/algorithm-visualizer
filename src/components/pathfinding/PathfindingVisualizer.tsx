@@ -4,14 +4,18 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
-import { astar } from '../../core/pathfinding/Astar';
-import { UCS } from '../../core/pathfinding/UCS';
 import { sleep } from '../../utils';
+import { getPathfindingAlgorithm } from '../../utils/AlgorithmFactory';
+import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Grid } from './Grid';
 import { Panel } from './Panel';
 
 const gridSize = 30;
 
+const algorithms = [
+  { name: 'UCS', value: 'ucs' },
+  { name: 'A*', value: 'astar' },
+];
 const modes = [
   { name: 'Wall', value: 'wall' },
   { name: 'Start', value: 'start' },
@@ -51,6 +55,7 @@ const drawPath = async (
 
 export const PathfindingVisualizer: React.FC = () => {
   // to disable moving starting and finish cells during search
+  const [algorithm, setAlgorithm] = React.useState<string>('ucs');
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
   const [finish, setFinish] = React.useState<Coord>({ x: 4, y: 0 });
@@ -62,8 +67,9 @@ export const PathfindingVisualizer: React.FC = () => {
   const reset = (): void => setGrid(resetGrid(gridSize, start, finish));
 
   const search = async (): Promise<void> => {
+    const searcher = getPathfindingAlgorithm(algorithm);
     setSearching(true);
-    await astar(start, finish, grid, setGrid).then(async (res) => {
+    await searcher(start, finish, grid, setGrid).then(async (res) => {
       if (res.success) await drawPath(res, grid, setGrid);
     });
     setSearching(false);
@@ -79,6 +85,11 @@ export const PathfindingVisualizer: React.FC = () => {
             mode={mode}
             setMode={setMode}
             modes={modes}
+          />
+          <AlgorithmButtonGroup
+            defaultAlgorithm={algorithm}
+            algorithms={algorithms}
+            setAlgorithm={setAlgorithm}
           />
         </Col>
       </Row>

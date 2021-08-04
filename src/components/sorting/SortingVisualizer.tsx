@@ -5,9 +5,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { Bar } from '../../core/model/Bar';
 import { BLUE, GREEN } from '../../core/model/Color';
-import { getAlgorithm } from '../../core/sorting/AlgorithmFactory';
 import { sleep } from '../../utils';
-import { AlgorithmButtonGroup } from './AlgorithmButtonGroup';
+import { getSortingAlgorithm } from '../../utils/AlgorithmFactory';
+import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Panel } from './Panel';
 
 const algorithms = [
@@ -51,7 +51,7 @@ export const SortingVisualizer: React.FC = () => {
   };
 
   const sort = async (): Promise<void> => {
-    const sorter = getAlgorithm(algorithm);
+    const sorter = getSortingAlgorithm(algorithm);
     await sorter(bars, setBars, delay);
     await finish(bars, setBars);
   };
