@@ -11,6 +11,7 @@ interface Props {
   setStart: React.Dispatch<React.SetStateAction<Coord>>;
   finish: Coord;
   setFinish: React.Dispatch<React.SetStateAction<Coord>>;
+  searching: boolean;
 }
 
 export const Grid: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const Grid: React.FC<Props> = ({
   setStart,
   finish,
   setFinish,
+  searching,
 }: Props) => {
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
@@ -51,16 +53,16 @@ export const Grid: React.FC<Props> = ({
 
   const handleMouseDown = (row: number, col: number): void => {
     if (mode === 'wall') toggleWall(row, col);
-    else if (mode === 'start') moveStart(row, col);
-    else if (mode === 'finish') moveFinish(row, col);
+    else if (mode === 'start' && !searching) moveStart(row, col);
+    else if (mode === 'finish' && !searching) moveFinish(row, col);
     setMouseDown(true);
   };
 
   const handleMouseEnter = (row: number, col: number): void => {
     if (mouseDown) {
       if (mode === 'wall') toggleWall(row, col);
-      else if (mode === 'start') moveStart(row, col);
-      else if (mode === 'finish') moveFinish(row, col);
+      else if (mode === 'start' && !searching) moveStart(row, col);
+      else if (mode === 'finish' && !searching) moveFinish(row, col);
     }
   };
 

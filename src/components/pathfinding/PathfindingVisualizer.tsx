@@ -48,6 +48,8 @@ const drawPath = async (
 };
 
 export const PathfindingVisualizer: React.FC = () => {
+  // to disable moving starting and finish cells during search
+  const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
   const [finish, setFinish] = React.useState<Coord>({ x: 4, y: 0 });
   const [grid, setGrid] = React.useState<Cell[][]>(
@@ -58,9 +60,11 @@ export const PathfindingVisualizer: React.FC = () => {
   const reset = (): void => setGrid(resetGrid(gridSize, start, finish));
 
   const search = async (): Promise<void> => {
+    setSearching(true);
     await UCS(start, finish, grid, setGrid).then(async (res) => {
       if (res.success) await drawPath(res, grid, setGrid);
     });
+    setSearching(false);
   };
 
   return (
@@ -86,6 +90,7 @@ export const PathfindingVisualizer: React.FC = () => {
             setStart={setStart}
             finish={finish}
             setFinish={setFinish}
+            searching={searching}
           />
         </Col>
       </Row>
