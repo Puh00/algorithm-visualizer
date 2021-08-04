@@ -19,6 +19,8 @@ export const CellButton: React.FC<Props> = ({
 }: Props) => {
   const cellColor = (cell: Cell): string => {
     if (cell.isWall) return 'grey';
+    else if (cell.isStart) return 'yellow';
+    else if (cell.isFinish) return 'blue';
     else if (cell.isPath) return 'Chartreuse';
     else if (cell.isActive) return 'red';
     else return '';

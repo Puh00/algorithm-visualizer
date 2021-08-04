@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { Cell } from '../../core/model/Cell';
+import { Cell, Coord } from '../../core/model/Cell';
 import { UCS, Result } from '../../core/pathfinding/UCS';
 import { sleep } from '../../utils';
 import { Grid } from './Grid';
@@ -10,15 +10,26 @@ import { Panel } from './Panel';
 
 const gridSize = 30;
 
-const resetGrid = (size: number): Cell[][] => {
-  return [...Array(size)].map((_, i) => {
+const modes = [
+  { name: 'Wall', value: 'wall' },
+  { name: 'Start', value: 'start' },
+  { name: 'Finish', value: 'finish' },
+];
+
+const resetGrid = (size: number, start: Coord, finish: Coord): Cell[][] => {
+  const grid: Cell[][] = [...Array(size)].map((_, i) => {
     return [...Array(size)].map((_, j) => ({
       coord: { x: j, y: i },
-      isWall: false,
       isActive: false,
       isPath: false,
+      isStart: false,
+      isFinish: false,
+      isWall: false,
     }));
   });
+  grid[start.y][start.x].isStart = true;
+  grid[finish.y][finish.x].isFinish = true;
+  return grid;
 };
 
 // Mark the path received from pathfinding algorithm
@@ -37,28 +48,45 @@ const drawPath = async (
 };
 
 export const PathfindingVisualizer: React.FC = () => {
-  const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(gridSize));
+  const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
+  const [finish, setFinish] = React.useState<Coord>({ x: 4, y: 0 });
+  const [grid, setGrid] = React.useState<Cell[][]>(
+    resetGrid(gridSize, start, finish)
+  );
+  const [mode, setMode] = React.useState<string>('wall');
 
-  const reset = (): void => setGrid(resetGrid(gridSize));
+  const reset = (): void => setGrid(resetGrid(gridSize, start, finish));
 
   const search = async (): Promise<void> => {
-    await UCS({ x: 10, y: 10 }, { x: 4, y: 0 }, grid, setGrid).then(
-      async (res) => {
-        if (res.success) await drawPath(res, grid, setGrid);
-      }
-    );
+    await UCS(start, finish, grid, setGrid).then(async (res) => {
+      if (res.success) await drawPath(res, grid, setGrid);
+    });
   };
 
   return (
     <Container fluid={true} style={{ padding: '0' }}>
       <Row>
         <Col className="text-center">
-          <Panel resetGrid={reset} search={search} />
+          <Panel
+            resetGrid={reset}
+            search={search}
+            mode={mode}
+            setMode={setMode}
+            modes={modes}
+          />
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md="auto">
-          <Grid grid={grid} setGrid={setGrid} />
+          <Grid
+            grid={grid}
+            mode={mode}
+            setGrid={setGrid}
+            start={start}
+            setStart={setStart}
+            finish={finish}
+            setFinish={setFinish}
+          />
         </Col>
       </Row>
     </Container>

@@ -1,14 +1,27 @@
 import React from 'react';
 
-import { Cell } from '../../core/model/Cell';
+import { Cell, Coord } from '../../core/model/Cell';
 import { CellButton } from './CellButton';
 
 interface Props {
   grid: Cell[][];
+  mode: string;
   setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>;
+  start: Coord;
+  setStart: React.Dispatch<React.SetStateAction<Coord>>;
+  finish: Coord;
+  setFinish: React.Dispatch<React.SetStateAction<Coord>>;
 }
 
-export const Grid: React.FC<Props> = ({ grid, setGrid }: Props) => {
+export const Grid: React.FC<Props> = ({
+  grid,
+  mode,
+  setGrid,
+  start,
+  setStart,
+  finish,
+  setFinish,
+}: Props) => {
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
   const toggleWall = (row: number, col: number): void => {
@@ -17,15 +30,38 @@ export const Grid: React.FC<Props> = ({ grid, setGrid }: Props) => {
     setGrid([...grid]);
   };
 
+  const moveStart = (row: number, col: number): void => {
+    grid[start.y][start.x].isStart = false;
+    const cell: Cell = grid[row][col];
+    cell.isStart = true;
+    setStart(cell.coord);
+    setGrid([...grid]);
+  };
+
+  const moveFinish = (row: number, col: number): void => {
+    grid[finish.y][finish.x].isFinish = false;
+    const cell = grid[row][col];
+    console.dir(cell.coord);
+    cell.isFinish = true;
+    setFinish(cell.coord);
+    setGrid([...grid]);
+  };
+
   const handleMouseUp = (): void => setMouseDown(false);
 
   const handleMouseDown = (row: number, col: number): void => {
-    toggleWall(row, col);
+    if (mode === 'wall') toggleWall(row, col);
+    else if (mode === 'start') moveStart(row, col);
+    else if (mode === 'finish') moveFinish(row, col);
     setMouseDown(true);
   };
 
   const handleMouseEnter = (row: number, col: number): void => {
-    if (mouseDown) toggleWall(row, col);
+    if (mouseDown) {
+      if (mode === 'wall') toggleWall(row, col);
+      else if (mode === 'start') moveStart(row, col);
+      else if (mode === 'finish') moveFinish(row, col);
+    }
   };
 
   return (
