@@ -87,7 +87,7 @@ export const UCS = async (
       // mark visited cells
       grid[entry.coord.y][entry.coord.x].isActive = true;
       setState([...grid]);
-      await sleep(10);
+      await sleep(1);
 
       for (const c of adjacentCoords(entry.coord, n, m)) {
         const costToNext = entry.costToHere + 1;
