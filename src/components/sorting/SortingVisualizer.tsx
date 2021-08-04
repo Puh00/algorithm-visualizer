@@ -5,8 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { Bar } from '../../core/model/Bar';
 import { BLUE, GREEN } from '../../core/model/Color';
-import { sleep } from '../../utils';
-import { getSortingAlgorithm } from '../../utils/AlgorithmFactory';
+import { sleep, getSortingAlgorithm } from '../../utils';
 import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Panel } from './Panel';
 

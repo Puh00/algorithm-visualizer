@@ -4,8 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
-import { sleep } from '../../utils';
-import { getPathfindingAlgorithm } from '../../utils/AlgorithmFactory';
+import { sleep, getPathfindingAlgorithm } from '../../utils';
 import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Grid } from './Grid';
 import { Panel } from './Panel';
