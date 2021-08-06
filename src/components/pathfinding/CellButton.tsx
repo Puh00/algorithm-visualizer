@@ -18,7 +18,8 @@ const cellColor = (cell: Cell): string => {
   else if (cell.isStart) return 'yellow';
   else if (cell.isFinish) return 'blue';
   else if (cell.isPath) return 'Chartreuse';
-  else if (cell.isActive) return 'red';
+  // or tomato for brighter
+  else if (cell.isActive) return 'crimson';
   else return 'azure';
 };
 

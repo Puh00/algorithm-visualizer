@@ -13,6 +13,7 @@ interface Props {
   modes: Mode[];
   resetGrid: () => void;
   search: () => Promise<void>;
+  generateMaze: () => Promise<void>;
 }
 
 export const Panel: React.FC<Props> = ({
@@ -21,9 +22,13 @@ export const Panel: React.FC<Props> = ({
   setMode,
   resetGrid,
   search,
+  generateMaze,
 }: Props) => {
   return (
     <span>
+      <Button variant="success" onClick={generateMaze}>
+        Generate Maze
+      </Button>
       <Button className="m-2" variant="danger" onClick={() => resetGrid()}>
         Reset
       </Button>

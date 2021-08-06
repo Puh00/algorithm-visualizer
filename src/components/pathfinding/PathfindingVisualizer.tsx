@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { RecursiveDivision } from '../../core/maze/RecursiveDivision';
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
 import { sleep, getPathfindingAlgorithm } from '../../utils';
@@ -23,7 +24,11 @@ const modes = [
 const calculateCells = (): [number, number] => {
   const noHorizontalCells = Math.floor(window.innerWidth / 30);
   const noVerticalCells = Math.floor((window.innerHeight - 160) / 30);
-  return [noHorizontalCells, noVerticalCells];
+  // maze algorithm requires maze to have odd size
+  return [
+    noHorizontalCells % 2 === 0 ? noHorizontalCells - 1 : noHorizontalCells,
+    noVerticalCells % 2 === 0 ? noVerticalCells - 1 : noVerticalCells,
+  ];
 };
 
 const resetGrid = (start: Coord, finish: Coord): Cell[][] => {
@@ -63,8 +68,8 @@ export const PathfindingVisualizer: React.FC = () => {
   const [algorithm, setAlgorithm] = React.useState<string>('ucs');
   // to disable moving starting and finish cells during search
   const [searching, setSearching] = React.useState<boolean>(false);
-  const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
-  const [finish, setFinish] = React.useState<Coord>({ x: 20, y: 10 });
+  const [start, setStart] = React.useState<Coord>({ x: 1, y: 3 });
+  const [finish, setFinish] = React.useState<Coord>({ x: 7, y: 3 });
   const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(start, finish));
   const [mode, setMode] = React.useState<string>('wall');
 
@@ -79,6 +84,17 @@ export const PathfindingVisualizer: React.FC = () => {
     setSearching(false);
   };
 
+  const generateMaze = async (): Promise<void> => {
+    await RecursiveDivision(
+      grid,
+      1,
+      grid[0].length - 2,
+      1,
+      grid.length - 2,
+      setGrid
+    );
+  };
+
   return (
     <Container fluid={true} style={{ padding: '0' }}>
       <Row>
@@ -89,6 +105,7 @@ export const PathfindingVisualizer: React.FC = () => {
             mode={mode}
             setMode={setMode}
             modes={modes}
+            generateMaze={generateMaze}
           />
           <AlgorithmButtonGroup
             defaultAlgorithm={algorithm}
