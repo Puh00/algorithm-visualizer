@@ -1,7 +1,6 @@
 .cell {
-  margin-bottom: '-3px';
-  width: '30px';
-  height: '30px';
+  width: 30px;
+  height: 30px;
   border-radius: 0 !important;
   box-shadow: none !important;
   border-color: rgb(255, 202, 56);

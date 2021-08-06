@@ -37,9 +37,6 @@ export const CellButton: React.FC<Props> = ({
     <Button
       className={`cell ${cssAnimation(cell)}`}
       style={{
-        marginBottom: '-3px',
-        width: '30px',
-        height: '30px',
         backgroundColor: cellColor(cell),
       }}
       onMouseEnter={() => {
