@@ -26,11 +26,13 @@ export const astar = async (
 
   const pq = new PriorityQueue<PQEntry>({
     comparator: (p1, p2) => {
-      if (p1.guessCost && p2.guessCost)
+      // bug: 'if (p1.guessCost)' will return false if p1.guessCost is 0
+      if (
+        typeof p1.guessCost !== 'undefined' &&
+        typeof p2.guessCost !== 'undefined'
+      )
         return p1.costToHere + p1.guessCost - (p2.costToHere + p2.guessCost);
-      else {
-        return 0;
-      }
+      else throw new Error("Undefined field 'guessCost' in PQEntry");
     },
   });
 
