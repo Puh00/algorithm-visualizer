@@ -59,7 +59,7 @@ const drawPath = async (
     for (const c of res.path) {
       grid[c.y][c.x].isPath = true;
       setState([...grid]);
-      await sleep(50);
+      await sleep(1);
     }
   }
 };

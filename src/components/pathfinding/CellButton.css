@@ -11,7 +11,7 @@
 }
 
 .finish {
-  animation: spin .5s forwards;
+  animation: spin .1s forwards;
 }
 
 @keyframes expandBox {

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { RecursiveBacktracking } from '../../core/maze/RecursiveBacktracking';
 import { Cell, Coord } from '../../core/model/Cell';
 import { CellButton } from './CellButton';
 
@@ -69,6 +70,30 @@ export const Grid: React.FC<Props> = ({
 
   return (
     <div>
+      <button
+        onClick={() => {
+          for (let i = 0; i < grid.length; i++) {
+            grid[i][0].isWall = true;
+            grid[i][grid[0].length - 1].isWall = true;
+          }
+          // horizontal walls
+          for (let i = 0; i < grid[0].length; i++) {
+            grid[0][i].isWall = true;
+            grid[grid.length - 1][i].isWall = true;
+          }
+          for (let i = 0; i < grid.length - 1; i++) {
+            for (let j = 0; j < grid[0].length - 1; j++) {
+              if (i % 2 === 0 && j % 2 === 0) grid[i][j].isWall = true;
+            }
+          }
+          setGrid([...grid]);
+        }}
+      >
+        test me
+      </button>
+      <button onClick={async () => await RecursiveBacktracking(grid, setGrid)}>
+        back
+      </button>
       <div
         onMouseDown={() => {
           setMouseDown(true);
