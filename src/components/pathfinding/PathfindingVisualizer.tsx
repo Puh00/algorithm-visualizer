@@ -64,15 +64,9 @@ export const PathfindingVisualizer: React.FC = () => {
   // to disable moving starting and finish cells during search
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 10, y: 10 });
-  const [finish, setFinish] = React.useState<Coord>({ x: 4, y: 0 });
+  const [finish, setFinish] = React.useState<Coord>({ x: 20, y: 10 });
   const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(start, finish));
   const [mode, setMode] = React.useState<string>('wall');
-
-  React.useState(() => {
-    console.log(`W: ${Math.floor(window.innerWidth / 30)}`);
-    console.log(`H: ${Math.floor(window.innerHeight / 30)}`);
-    console.log(`Height: ${window.innerHeight}`);
-  });
 
   const reset = (): void => setGrid(resetGrid(start, finish));
 

@@ -1,0 +1,34 @@
+.cell {
+  margin-bottom: '-3px';
+  width: '30px';
+  height: '30px';
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-color: rgb(255, 202, 56);
+}
+
+.visited {
+  animation: expandBox .5s;
+}
+
+.finish {
+  animation: spin .5s forwards;
+}
+
+@keyframes expandBox {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}

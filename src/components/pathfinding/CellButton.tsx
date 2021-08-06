@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { Button } from 'react-bootstrap';
+
 import { Cell } from '../../core/model/Cell';
+import './CellButton.css';
 
 interface Props {
   cell: Cell;
@@ -10,6 +13,19 @@ interface Props {
   onMouseUp: () => void;
 }
 
+const cellColor = (cell: Cell): string => {
+  if (cell.isWall) return 'grey';
+  else if (cell.isStart) return 'yellow';
+  else if (cell.isFinish) return 'blue';
+  else if (cell.isPath) return 'Chartreuse';
+  else if (cell.isActive) return 'red';
+  else return 'azure';
+};
+
+const cssAnimation = (cell: Cell): string => {
+  return cell.isPath ? 'finish' : cell.isActive ? 'visited' : '';
+};
+
 export const CellButton: React.FC<Props> = ({
   cell,
   mouseDown,
@@ -17,17 +33,9 @@ export const CellButton: React.FC<Props> = ({
   onMouseEnter,
   onMouseUp,
 }: Props) => {
-  const cellColor = (cell: Cell): string => {
-    if (cell.isWall) return 'grey';
-    else if (cell.isStart) return 'yellow';
-    else if (cell.isFinish) return 'blue';
-    else if (cell.isPath) return 'Chartreuse';
-    else if (cell.isActive) return 'red';
-    else return '';
-  };
-
   return (
-    <button
+    <Button
+      className={`cell ${cssAnimation(cell)}`}
       style={{
         marginBottom: '-3px',
         width: '30px',
