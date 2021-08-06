@@ -28,8 +28,10 @@ export const Grid: React.FC<Props> = ({
 
   const toggleWall = (row: number, col: number): void => {
     const cell = grid[row][col];
-    cell.isWall = !cell.isWall;
-    setGrid([...grid]);
+    if (!cell.isStart && !cell.isFinish) {
+      cell.isWall = !cell.isWall;
+      setGrid([...grid]);
+    }
   };
 
   const moveStart = (row: number, col: number): void => {
