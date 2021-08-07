@@ -5,11 +5,16 @@ const yDir = [-1, 0, 1, 0];
 const xDir = [0, 1, 0, -1];
 
 // Returns adjacent coordinates that are within bounds
-export const adjacentCoords = (c: Coord, n: number, m: number): Coord[] => {
+export const adjacentCoords = (
+  c: Coord,
+  n: number,
+  m: number,
+  offset = 1
+): Coord[] => {
   const coords: Coord[] = [];
   for (let i = 0; i < 4; i++) {
-    const row = c.y + yDir[i];
-    const col = c.x + xDir[i];
+    const row = c.y + yDir[i] * offset;
+    const col = c.x + xDir[i] * offset;
     if (row >= 0 && col >= 0 && row < n && col < m) {
       coords.push({ x: col, y: row });
     }

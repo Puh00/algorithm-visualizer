@@ -1,25 +1,7 @@
 import React from 'react';
 
-import { sleep } from '../../utils';
-import { Cell, Coord } from '../model/Cell';
-
-// TODO: Move this to utils/Coordinates.ts
-// Direction vectors: [Up, Right, Down, Left] offset by 2
-const yDir = [-2, 0, 2, 0];
-const xDir = [0, 2, 0, -2];
-
-export const adjacentCoords = (c: Coord, n: number, m: number): Coord[] => {
-  const coords: Coord[] = [];
-  for (let i = 0; i < 4; i++) {
-    const row = c.y + yDir[i];
-    const col = c.x + xDir[i];
-    if (row >= 0 && col >= 0 && row < n && col < m) {
-      coords.push({ x: col, y: row });
-    }
-  }
-  return coords;
-};
-// _______________________________
+import { adjacentCoords, sleep } from '../../utils';
+import { Cell } from '../model/Cell';
 
 export const shuffle = <T>(array: T[]): T[] => {
   const temp = [...array];
@@ -77,7 +59,7 @@ const carvePassagesFrom = async (
   visited: boolean[][]
 ): Promise<void> => {
   const neighbours = shuffle(
-    adjacentCoords({ x: x, y: y }, grid.length, grid[0].length)
+    adjacentCoords({ x: x, y: y }, grid.length, grid[0].length, 2)
   );
   visited[y][x] = true;
 
