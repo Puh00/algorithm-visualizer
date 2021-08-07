@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 
-import { sleep } from '../../utils';
+import { randomNumber, sleep } from '../../utils';
 import { Cell } from '../model/Cell';
-
-// inclusive: [min, max]
-const randomNumber = (min: number, max: number): number =>
-  Math.floor(Math.random() * (max - min + 1) + min);
 
 const addHWall = async (
   grid: Cell[][],

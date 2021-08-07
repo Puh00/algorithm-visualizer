@@ -6,3 +6,5 @@ export {
   getSortingAlgorithm,
   getPathfindingAlgorithm,
 } from './AlgorithmFactory';
+export { randomNumber } from './Random';
+export { carveHorizontaly, carveVertically, markAllCellsAsWalls } from './Maze';

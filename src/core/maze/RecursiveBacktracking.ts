@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { adjacentCoords, sleep } from '../../utils';
+import {
+  adjacentCoords,
+  carveHorizontaly,
+  carveVertically,
+  markAllCellsAsWalls,
+} from '../../utils';
 import { Cell } from '../model/Cell';
 
 export const shuffle = <T>(array: T[]): T[] => {
@@ -10,45 +15,6 @@ export const shuffle = <T>(array: T[]): T[] => {
     [temp[i], temp[j]] = [temp[j], temp[i]]; // shorthand for swap
   }
   return temp;
-};
-
-const markAllCellsAsWalls = (
-  grid: Cell[][],
-  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
-): void => {
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[0].length; col++) {
-      grid[row][col].isWall = true;
-    }
-  }
-  setGrid([...grid]);
-};
-
-// possible to merge carveHorizontally with carveVertically?
-const carveHorizontaly = async (
-  grid: Cell[][],
-  x: number,
-  y: number,
-  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
-): Promise<void> => {
-  for (let i = 0; i < 3; i++) {
-    grid[y][x + i].isWall = false;
-  }
-  setGrid([...grid]);
-  await sleep(1);
-};
-
-const carveVertically = async (
-  grid: Cell[][],
-  x: number,
-  y: number,
-  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
-): Promise<void> => {
-  for (let i = 0; i < 3; i++) {
-    grid[y + i][x].isWall = false;
-  }
-  setGrid([...grid]);
-  await sleep(1);
 };
 
 const carvePassagesFrom = async (
