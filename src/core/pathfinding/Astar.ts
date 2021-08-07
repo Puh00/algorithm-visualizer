@@ -6,9 +6,12 @@ import { adjacentCoords, extractPath, isSameCoord, sleep } from '../../utils';
 import { Cell, Coord } from '../model/Cell';
 import { PQEntry, Result } from '../model/PQEntry';
 
-// Euclidian distance between the coordinates
-const guessCost = (p: Coord, q: Coord): number => {
+/* const euclidianDistance = (p: Coord, q: Coord): number => {
   return Math.hypot(p.x - q.x, p.y - q.y);
+}; */
+
+const manhattanDistance = (p: Coord, q: Coord): number => {
+  return Math.abs(p.x - q.x) + Math.abs(p.y - q.y);
 };
 
 export const astar = async (
@@ -41,7 +44,7 @@ export const astar = async (
     coord: start,
     costToHere: 0,
     backPointer: null,
-    guessCost: guessCost(start, goal),
+    guessCost: manhattanDistance(start, goal),
   });
 
   while (pq.length !== 0) {
@@ -67,7 +70,7 @@ export const astar = async (
           coord: c,
           costToHere: costToNext,
           backPointer: entry,
-          guessCost: guessCost(c, goal),
+          guessCost: manhattanDistance(c, goal),
         });
       }
     }
