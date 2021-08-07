@@ -17,6 +17,7 @@ const algorithms = [
 const mazes = [
   { name: 'Recursive Division', value: 'division' },
   { name: 'Recursive Backtracking', value: 'backtracking' },
+  { name: 'Binary Tree (Southeast bias)', value: 'binary' },
 ];
 const modes = [
   { name: 'Wall', value: 'wall' },
