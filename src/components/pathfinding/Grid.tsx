@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { RecursiveBacktracking } from '../../core/maze/RecursiveBacktracking';
 import { Cell, Coord } from '../../core/model/Cell';
 import { CellButton } from './CellButton';
 
@@ -90,9 +89,6 @@ export const Grid: React.FC<Props> = ({
         }}
       >
         test me
-      </button>
-      <button onClick={async () => await RecursiveBacktracking(grid, setGrid)}>
-        back
       </button>
       <div
         onMouseDown={() => {

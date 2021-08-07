@@ -118,15 +118,19 @@ const divide = async (
 
 export const RecursiveDivision = async (
   grid: Cell[][],
-  minX: number,
-  maxX: number,
-  minY: number,
-  maxY: number,
   setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
 ): Promise<void> => {
   const visited: boolean[][] = Array.from(Array(grid.length), () =>
     Array(grid[0].length).fill(false)
   );
   await addOuterWalls(grid, setGrid);
-  await divide(grid, minX, maxX, minY, maxY, setGrid, visited);
+  await divide(
+    grid,
+    1,
+    grid[0].length - 2,
+    1,
+    grid.length - 2,
+    setGrid,
+    visited
+  );
 };

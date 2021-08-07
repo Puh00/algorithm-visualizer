@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { RecursiveDivision } from '../../core/maze/RecursiveDivision';
+import { getMazeAlgorithm } from '../../core/maze/MazeFactory';
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
 import { sleep, getPathfindingAlgorithm } from '../../utils';
@@ -13,6 +13,10 @@ import { Panel } from './Panel';
 const algorithms = [
   { name: 'UCS', value: 'ucs' },
   { name: 'A*', value: 'astar' },
+];
+const mazes = [
+  { name: 'Recursive Division', value: 'division' },
+  { name: 'Recursive Backtracking', value: 'backtracking' },
 ];
 const modes = [
   { name: 'Wall', value: 'wall' },
@@ -84,27 +88,28 @@ export const PathfindingVisualizer: React.FC = () => {
     setSearching(false);
   };
 
-  const generateMaze = async (): Promise<void> => {
-    await RecursiveDivision(
-      grid,
-      1,
-      grid[0].length - 2,
-      1,
-      grid.length - 2,
-      setGrid
-    );
+  const generateMaze = async (algorithmType: string): Promise<void> => {
+    const mazeGenerator = getMazeAlgorithm(algorithmType);
+    await mazeGenerator(grid, setGrid);
   };
 
   return (
     <Container fluid={true} style={{ padding: '0' }}>
       <Row>
-        <Col className="text-center">
+        <Col
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Panel
             resetGrid={reset}
             search={search}
             mode={mode}
             setMode={setMode}
             modes={modes}
+            mazes={mazes}
             generateMaze={generateMaze}
           />
           <AlgorithmButtonGroup

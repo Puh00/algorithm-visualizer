@@ -19,7 +19,7 @@ export const AlgorithmButtonGroup: React.FC<Props> = ({
   setAlgorithm,
 }: Props) => {
   return (
-    <ButtonGroup className="p-3">
+    <ButtonGroup className="p-1">
       {algorithms.map((alg) => (
         <ToggleButton
           key={alg.value}

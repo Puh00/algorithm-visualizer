@@ -1,8 +1,14 @@
 import React, { SetStateAction } from 'react';
 
-import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
+import {
+  Button,
+  ButtonGroup,
+  Dropdown,
+  DropdownButton,
+  ToggleButton,
+} from 'react-bootstrap';
 
-interface Mode {
+interface NameValue {
   name: string;
   value: string;
 }
@@ -10,10 +16,11 @@ interface Mode {
 interface Props {
   mode: string;
   setMode: React.Dispatch<SetStateAction<string>>;
-  modes: Mode[];
+  modes: NameValue[];
   resetGrid: () => void;
   search: () => Promise<void>;
-  generateMaze: () => Promise<void>;
+  mazes: NameValue[];
+  generateMaze: (algorithmType: string) => Promise<void>;
 }
 
 export const Panel: React.FC<Props> = ({
@@ -22,13 +29,28 @@ export const Panel: React.FC<Props> = ({
   setMode,
   resetGrid,
   search,
+  mazes,
   generateMaze,
 }: Props) => {
   return (
-    <span>
-      <Button variant="success" onClick={generateMaze}>
-        Generate Maze
-      </Button>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <DropdownButton variant="success" title="Mazes" menuAlign="left">
+        {mazes.map((m, i) => (
+          <Dropdown.Item
+            as="button"
+            key={i}
+            onClick={() => generateMaze(m.value)}
+          >
+            {m.name}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
       <Button className="m-2" variant="danger" onClick={() => resetGrid()}>
         Reset
       </Button>
@@ -49,6 +71,6 @@ export const Panel: React.FC<Props> = ({
           </ToggleButton>
         ))}
       </ButtonGroup>
-    </span>
+    </div>
   );
 };
