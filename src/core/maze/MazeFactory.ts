@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Cell } from '../model/Cell';
 import { BinaryTree } from './BinaryTree';
-import { Prim } from './Prims';
+import { Prim } from './Prim';
 import { RecursiveBacktracking } from './RecursiveBacktracking';
 import { RecursiveDivision } from './RecursiveDivision';
 
