@@ -19,6 +19,7 @@ const mazes = [
   { name: 'Recursive Backtracking', value: 'backtracking' },
   { name: 'Binary Tree (Southeast bias)', value: 'binary' },
   { name: "Prim's Algorithm", value: 'prim' },
+  { name: "Kruskal's Algorithm", value: 'kruskal' },
 ];
 const modes = [
   { name: 'Wall', value: 'wall' },
