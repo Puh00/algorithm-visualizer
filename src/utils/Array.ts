@@ -4,8 +4,6 @@ export const swap = <T>(
   y: number,
   setState?: React.Dispatch<React.SetStateAction<T[]>>
 ): void => {
-  const temp: T = arr[x];
-  arr[x] = arr[y];
-  arr[y] = temp;
+  [arr[y], arr[x]] = [arr[x], arr[y]];
   if (setState) setState([...arr]);
 };
