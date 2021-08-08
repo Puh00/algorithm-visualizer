@@ -2,9 +2,11 @@ import React from 'react';
 
 import {
   adjacentCoords,
+  alignmentBetweenCoordinates,
   carveHorizontaly,
   carveVertically,
   markAllCellsAsWalls,
+  randomOddCoordinates,
 } from '../../utils';
 import { Cell } from '../model/Cell';
 
@@ -25,7 +27,7 @@ const carvePassagesFrom = async (
   visited: boolean[][]
 ): Promise<void> => {
   const neighbours = shuffle(
-    adjacentCoords({ x: x, y: y }, grid.length, grid[0].length, 2)
+    adjacentCoords({ x, y }, grid.length, grid[0].length, 2)
   );
   visited[y][x] = true;
 
@@ -33,9 +35,11 @@ const carvePassagesFrom = async (
     if (!visited[n.y][n.x]) {
       visited[n.y][n.x] = true;
       // check the direction between the coordinates
-      if (Math.max(y, n.y) - Math.min(y, n.y) === 0)
+      const alignment = alignmentBetweenCoordinates({ x, y }, n);
+      if (alignment === 'HORIZONTAL')
         await carveHorizontaly(grid, Math.min(x, n.x), y, setGrid);
-      else await carveVertically(grid, x, Math.min(y, n.y), setGrid);
+      else if (alignment === 'VERTICAL')
+        await carveVertically(grid, x, Math.min(y, n.y), setGrid);
       await carvePassagesFrom(n.x, n.y, grid, setGrid, visited);
     }
   }
@@ -46,8 +50,8 @@ export const RecursiveBacktracking = async (
   setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
 ): Promise<void> => {
   markAllCellsAsWalls(grid, setGrid);
-  const visited: boolean[][] = Array.from(Array(grid.length), () =>
-    Array(grid[0].length).fill(false)
-  );
-  await carvePassagesFrom(1, 1, grid, setGrid, visited);
+  const [n, m] = [grid.length, grid[0].length];
+  const visited: boolean[][] = Array.from(Array(n), () => Array(m).fill(false));
+  const { x, y } = randomOddCoordinates(n, m);
+  await carvePassagesFrom(x, y, grid, setGrid, visited);
 };

@@ -25,3 +25,11 @@ export const adjacentCoords = (
 // Since Typescript compare by references...
 export const isSameCoord = (c1: Coord, c2: Coord): boolean =>
   c1.x === c2.x && c1.y === c2.y;
+
+type dir = 'HORIZONTAL' | 'VERTICAL';
+
+export const alignmentBetweenCoordinates = (p: Coord, q: Coord): dir => {
+  if (Math.max(p.y, q.y) - Math.min(p.y, q.y) === 0) return 'HORIZONTAL';
+  else if (Math.max(p.x, q.x) - Math.min(p.x, q.x) === 0) return 'VERTICAL';
+  else throw new Error('Neither horizontally or vertically aligned');
+};
