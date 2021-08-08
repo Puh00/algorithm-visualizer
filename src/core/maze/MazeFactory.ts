@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Cell } from '../model/Cell';
 import { BinaryTree } from './BinaryTree';
+import { Prim } from './Prims';
 import { RecursiveBacktracking } from './RecursiveBacktracking';
 import { RecursiveDivision } from './RecursiveDivision';
 
@@ -14,5 +15,6 @@ export const getMazeAlgorithm = (algorithmType: string): mazeFunc => {
   if (algorithmType === 'division') return RecursiveDivision;
   else if (algorithmType === 'backtracking') return RecursiveBacktracking;
   else if (algorithmType === 'binary') return BinaryTree;
+  else if (algorithmType === 'prim') return Prim;
   else throw new Error('Invalid argument for Maze Algorithm');
 };
