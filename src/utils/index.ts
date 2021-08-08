@@ -10,5 +10,9 @@ export {
   getSortingAlgorithm,
   getPathfindingAlgorithm,
 } from './AlgorithmFactory';
-export { randomOddCoordinates, randomNumber } from './Random';
+export {
+  popRandomElementFromSet,
+  randomOddCoordinates,
+  randomNumber,
+} from './Random';
 export { carveHorizontaly, carveVertically, markAllCellsAsWalls } from './Maze';

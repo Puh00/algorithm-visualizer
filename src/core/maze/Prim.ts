@@ -4,6 +4,7 @@ import {
   carveHorizontaly,
   carveVertically,
   markAllCellsAsWalls,
+  popRandomElementFromSet,
   randomNumber,
   randomOddCoordinates,
 } from '../../utils';
@@ -21,13 +22,6 @@ const walls = (grid: Cell[][], c: Coord): Coord[] => {
   return adjacentCoords(c, grid.length, grid[0].length, 2).filter(
     (coord) => grid[coord.y][coord.x].isWall
   );
-};
-
-const removeRandomElementFromSet = <T>(set: Set<T>): T => {
-  if (set.size === 0) throw new Error('Empty Set');
-  const rs = Array.from(set.values())[Math.floor(Math.random() * set.size)];
-  set.delete(rs);
-  return rs;
 };
 
 // Add walls adjacent to the given coordinate, whilst also removing it
@@ -50,7 +44,7 @@ export const Prim = async (
   mark(startCoord, grid, frontier);
 
   while (frontier.size !== 0) {
-    const { x, y } = removeRandomElementFromSet(frontier);
+    const { x, y } = popRandomElementFromSet(frontier);
 
     // Skip if it has already been converted to a path
     if (!grid[y][x].isWall) continue;
