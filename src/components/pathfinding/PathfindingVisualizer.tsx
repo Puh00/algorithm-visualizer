@@ -20,6 +20,7 @@ const mazes = [
   { name: 'Binary Tree (Southeast bias)', value: 'binary' },
   { name: "Prim's Algorithm", value: 'prim' },
   { name: "Kruskal's Algorithm", value: 'kruskal' },
+  { name: "Eller's Algorithm", value: 'eller' },
 ];
 const modes = [
   { name: 'Wall', value: 'wall' },
