@@ -2,9 +2,7 @@ import React from 'react';
 
 import {
   adjacentCoords,
-  alignmentBetweenCoordinates,
-  carveHorizontaly,
-  carveVertically,
+  carvePassageBetweenAdjacentCoordinates,
   markAllCellsAsWalls,
   randomOddCoordinates,
 } from '../../utils';
@@ -34,12 +32,7 @@ const carvePassagesFrom = async (
   for (const n of neighbours) {
     if (!visited[n.y][n.x]) {
       visited[n.y][n.x] = true;
-      // check the direction between the coordinates
-      const alignment = alignmentBetweenCoordinates({ x, y }, n);
-      if (alignment === 'HORIZONTAL')
-        await carveHorizontaly(grid, Math.min(x, n.x), y, setGrid);
-      else if (alignment === 'VERTICAL')
-        await carveVertically(grid, x, Math.min(y, n.y), setGrid);
+      await carvePassageBetweenAdjacentCoordinates({ x, y }, n, grid, setGrid);
       await carvePassagesFrom(n.x, n.y, grid, setGrid, visited);
     }
   }

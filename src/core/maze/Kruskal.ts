@@ -1,7 +1,5 @@
 import {
-  alignmentBetweenCoordinates,
-  carveHorizontaly,
-  carveVertically,
+  carvePassageBetweenAdjacentCoordinates,
   markAllCellsAsWalls,
   popRandomElementFromSet,
 } from '../../utils';
@@ -67,12 +65,7 @@ export const Kruskal = async (
     const [set1, set2] = [sets[p.y][p.x], sets[q.y][q.x]];
     if (!set1.isConnected(set2)) {
       set1.connect(set2);
-      // Refactor this out to utils
-      const alignment = alignmentBetweenCoordinates(p, q);
-      if (alignment === 'HORIZONTAL')
-        await carveHorizontaly(grid, Math.min(p.x, q.x), p.y, setGrid);
-      else if (alignment === 'VERTICAL')
-        await carveVertically(grid, p.x, Math.min(p.y, q.y), setGrid);
+      await carvePassageBetweenAdjacentCoordinates(p, q, grid, setGrid);
     }
   }
 };

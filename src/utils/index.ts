@@ -15,4 +15,9 @@ export {
   randomOddCoordinates,
   randomNumber,
 } from './Random';
-export { carveHorizontaly, carveVertically, markAllCellsAsWalls } from './Maze';
+export {
+  carveHorizontaly,
+  carveVertically,
+  carvePassageBetweenAdjacentCoordinates,
+  markAllCellsAsWalls,
+} from './Maze';

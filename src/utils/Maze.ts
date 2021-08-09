@@ -1,5 +1,5 @@
-import { sleep } from '.';
-import { Cell } from '../core/model/Cell';
+import { alignmentBetweenCoordinates, sleep } from '.';
+import { Cell, Coord } from '../core/model/Cell';
 
 export const markAllCellsAsWalls = (
   grid: Cell[][],
@@ -37,4 +37,29 @@ export const carveVertically = async (
   }
   setGrid([...grid]);
   await sleep(1);
+};
+
+/**
+ * Carve a passage between two coordinates if and only if they are adjacent
+ * and vertically or horizontally aligned.
+ *
+ * @param p starting coordinate.
+ * @param q target coordinate.
+ * @param grid the grid to carve upon.
+ * @param setGrid react hook to update the state.
+ */
+export const carvePassageBetweenAdjacentCoordinates = async (
+  p: Coord,
+  q: Coord,
+  grid: Cell[][],
+  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
+): Promise<void> => {
+  const alignment = alignmentBetweenCoordinates(p, q);
+  if (alignment === 'HORIZONTAL') {
+    // current cell and neighbour are horizontally aligned
+    await carveHorizontaly(grid, Math.min(p.x, q.x), p.y, setGrid);
+  } else if (alignment === 'VERTICAL') {
+    // ...vertically aligned
+    await carveVertically(grid, p.x, Math.min(p.y, q.y), setGrid);
+  }
 };

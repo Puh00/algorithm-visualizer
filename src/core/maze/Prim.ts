@@ -1,8 +1,6 @@
 import {
   adjacentCoords,
-  alignmentBetweenCoordinates,
-  carveHorizontaly,
-  carveVertically,
+  carvePassageBetweenAdjacentCoordinates,
   markAllCellsAsWalls,
   popRandomElementFromSet,
   randomNumber,
@@ -44,25 +42,16 @@ export const Prim = async (
   mark(startCoord, grid, frontier);
 
   while (frontier.size !== 0) {
-    const { x, y } = popRandomElementFromSet(frontier);
+    const p = popRandomElementFromSet(frontier);
 
     // Skip if it has already been converted to a path
-    if (!grid[y][x].isWall) continue;
+    if (!grid[p.y][p.x].isWall) continue;
 
-    const neighbours = passages(grid, { x, y });
-
+    const neighbours = passages(grid, p);
     if (neighbours.length !== 0) {
-      const { x: nx, y: ny } =
-        neighbours[randomNumber(0, neighbours.length - 1)];
-      const alignment = alignmentBetweenCoordinates({ x, y }, { x: nx, y: ny });
-      if (alignment === 'HORIZONTAL') {
-        // current cell and neighbour are horizontally aligned
-        await carveHorizontaly(grid, Math.min(x, nx), y, setGrid);
-      } else if (alignment === 'VERTICAL') {
-        // ...vertically aligned
-        await carveVertically(grid, x, Math.min(y, ny), setGrid);
-      }
+      const q = neighbours[randomNumber(0, neighbours.length - 1)];
+      await carvePassageBetweenAdjacentCoordinates(p, q, grid, setGrid);
     }
-    mark({ x, y }, grid, frontier);
+    mark(p, grid, frontier);
   }
 };
