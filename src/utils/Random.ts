@@ -11,8 +11,8 @@ export const randomNumber = (min: number, max: number): number =>
  * @returns a random odd coordinate.
  */
 export const randomOddCoordinates = (n: number, m: number): Coord => {
-  const x = randomNumber(2, m);
-  const y = randomNumber(2, n);
+  const x = randomNumber(2, m - 1);
+  const y = randomNumber(2, n - 1);
   return { x: x % 2 === 0 ? x - 1 : x, y: y % 2 === 0 ? y - 1 : y };
 };
 
