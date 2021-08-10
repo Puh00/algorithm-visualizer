@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import '../../App.css';
+import './SortingVisualizer.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { Bar } from '../../core/model/Bar';
@@ -24,7 +24,7 @@ export const SortingVisualizer: React.FC = () => {
   const [bars, setBars] = useState<Bar[]>([]);
   const [num, setNum] = useState<number>(90);
   const [algorithm, setAlgorithm] = useState<string>('insertion');
-  const [delay, setDelay] = useState<number>(20);
+  const [delay, setDelay] = useState<number>(1);
 
   const resetBars = (): void =>
     setBars(
