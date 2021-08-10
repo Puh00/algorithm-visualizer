@@ -7,6 +7,7 @@ import {
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/github.png';
 
@@ -25,8 +26,12 @@ export const Header = (): JSX.Element => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/sorting">Sorting</Nav.Link>
-            <Nav.Link href="/pathfinding">Pathfinding</Nav.Link>
+            <Nav.Link as={Link} to="/sorting">
+              Sorting
+            </Nav.Link>
+            <Nav.Link as={Link} to="/pathfinding">
+              Pathfinding
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
