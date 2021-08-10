@@ -69,7 +69,18 @@ export const Grid: React.FC<Props> = ({
 
   return (
     <div>
+      {/* 🐰 🥚 */}
       <button
+        style={{
+          background: 'transparent',
+          border: 'none',
+          outline: 'none',
+          display: 'block',
+          height: '5px',
+          width: '5px',
+          cursor: 'pointer',
+          marginBottom: '5px',
+        }}
         onClick={() => {
           for (let i = 0; i < grid.length; i++) {
             grid[i][0].isWall = true;
@@ -87,9 +98,7 @@ export const Grid: React.FC<Props> = ({
           }
           setGrid([...grid]);
         }}
-      >
-        test me
-      </button>
+      />
       <div
         onMouseDown={() => {
           setMouseDown(true);
