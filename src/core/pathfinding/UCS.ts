@@ -6,15 +6,21 @@ import { adjacentCoords, extractPath, isSameCoord, sleep } from '../../utils';
 import { Cell, Coord } from '../model/Cell';
 import { PQEntry, Result } from '../model/PQEntry';
 
+/**
+ * Uniform-Cost Search
+ * @param start the starting coordinate.
+ * @param goal the target coordinate.
+ * @param grid the grid that has the state of every cell.
+ * @param setGrid react hook to update the state of the grid.
+ * @returns the path from start to goal if the algorithm successfully found the target.
+ */
 export const UCS = async (
   start: Coord,
   goal: Coord,
   grid: Cell[][],
   setState: React.Dispatch<React.SetStateAction<Cell[][]>>
 ): Promise<Result> => {
-  // n * m length of grid
-  const n = grid.length;
-  const m = grid[0].length;
+  const [n, m] = [grid.length, grid[0].length];
 
   // Auxiliary array keeping track of visited cells
   const visited: boolean[][] = Array.from(Array(n), () => Array(m).fill(false));

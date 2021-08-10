@@ -6,23 +6,31 @@ import { adjacentCoords, extractPath, isSameCoord, sleep } from '../../utils';
 import { Cell, Coord } from '../model/Cell';
 import { PQEntry, Result } from '../model/PQEntry';
 
-/* const euclidianDistance = (p: Coord, q: Coord): number => {
-  return Math.hypot(p.x - q.x, p.y - q.y);
-}; */
-
+/**
+ * Calulates the Manhattan distance between the given coordinates.
+ * @param p the first coordinate.
+ * @param q the second coordinate.
+ * @returns the Manhattan distance between the two coordinates.
+ */
 const manhattanDistance = (p: Coord, q: Coord): number => {
   return Math.abs(p.x - q.x) + Math.abs(p.y - q.y);
 };
 
+/**
+ * A* search algorithm
+ * @param start the starting coordinate.
+ * @param goal the target coordinate.
+ * @param grid the grid that has the state of every cell.
+ * @param setGrid react hook to update the state of the grid.
+ * @returns the path from start to goal if the algorithm successfully found the target.
+ */
 export const astar = async (
   start: Coord,
   goal: Coord,
   grid: Cell[][],
   setState: React.Dispatch<React.SetStateAction<Cell[][]>>
 ): Promise<Result> => {
-  // n * m length of grid
-  const n = grid.length;
-  const m = grid[0].length;
+  const [n, m] = [grid.length, grid[0].length];
 
   // Auxiliary array keeping track of visited cells
   const visited: boolean[][] = Array.from(Array(n), () => Array(m).fill(false));
