@@ -1,9 +1,11 @@
 # algorithm-visualizer
-This project visualizes various sorting, pathfinding, and maze generating algorithms in Typescript.
+This project visualizes various ***sorting***, ***pathfinding***, and ***maze*** generating algorithms in Typescript.
 
-Sorting                    |  Maze + Pathfinding
-:-------------------------:|:-------------------------:
-![](src/assets/sort.gif)   |  ![](src/assets/maze.gif)
+<p align="middle">
+  <img src="src/assets/sort.gif" width="49%" />
+  <img src="src/assets/maze.gif" width="49%" /> 
+</p>
+
 
 To view this app in action, vist [https://puh00.github.io/algorithm-visualizer/](https://puh00.github.io/algorithm-visualizer/)
 
