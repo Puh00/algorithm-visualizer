@@ -7,10 +7,6 @@ export {
   isSameCoord,
 } from './Coordinates';
 export {
-  getSortingAlgorithm,
-  getPathfindingAlgorithm,
-} from './AlgorithmFactory';
-export {
   popRandomElementFromSet,
   randomOddCoordinates,
   randomNumber,
