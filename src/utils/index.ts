@@ -4,6 +4,7 @@ export { extractPath } from './Path';
 export {
   adjacentCoords,
   alignmentBetweenCoordinates,
+  closestOddCoord,
   isSameCoord,
 } from './Coordinates';
 export {

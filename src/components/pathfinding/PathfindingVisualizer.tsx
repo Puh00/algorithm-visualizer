@@ -6,7 +6,7 @@ import { getMazeAlgorithm } from '../../core/maze/MazeFactory';
 import { Cell, Coord } from '../../core/model/Cell';
 import { Result } from '../../core/model/PQEntry';
 import { getPathfindingAlgorithm } from '../../core/pathfinding/PathfindingFactory';
-import { sleep } from '../../utils';
+import { closestOddCoord, sleep } from '../../utils';
 import { AlgorithmButtonGroup } from '../common/AlgorithmButtonGroup';
 import { Grid } from './Grid';
 import { Panel } from './Panel';
@@ -106,7 +106,21 @@ export const PathfindingVisualizer: React.FC = () => {
     setSearching(false);
   };
 
+  // Move start and finish to odd coordinates (if they aren't already on odd coordinates)
+  const relocateStartAndFinishToOddCoords = (): void => {
+    grid[start.y][start.x].isStart = false;
+    grid[finish.y][finish.x].isFinish = false;
+    const newStart = closestOddCoord(start);
+    const newFinish = closestOddCoord(finish);
+    grid[newStart.y][newStart.x].isStart = true;
+    grid[newFinish.y][newFinish.x].isFinish = true;
+    setGrid([...grid]);
+    setStart(newStart);
+    setFinish(newFinish);
+  };
+
   const generateMaze = async (algorithmType: string): Promise<void> => {
+    relocateStartAndFinishToOddCoords();
     const mazeGenerator = getMazeAlgorithm(algorithmType);
     await mazeGenerator(grid, setGrid);
   };

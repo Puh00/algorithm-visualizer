@@ -48,3 +48,15 @@ export const alignmentBetweenCoordinates = (p: Coord, q: Coord): dir => {
   else if (Math.max(p.x, q.x) - Math.min(p.x, q.x) === 0) return 'VERTICAL';
   else throw new Error('Neither horizontally or vertically aligned');
 };
+
+/**
+ * If {p} is not located at odd coordinates, modify it so that the coordinates are odd.
+ * @param p the coordinates.
+ * @returns odd coordinates.
+ */
+export const closestOddCoord = (p: Coord): Coord => {
+  if (p.x < 0 || p.y < 0) throw new Error('Invalid negative coordinate');
+  const x = p.x % 2 !== 0 ? p.x : p.x - 1 < 1 ? p.x + 1 : p.x - 1;
+  const y = p.y % 2 !== 0 ? p.y : p.y - 1 < 1 ? p.y + 1 : p.y - 1;
+  return { x, y };
+};
