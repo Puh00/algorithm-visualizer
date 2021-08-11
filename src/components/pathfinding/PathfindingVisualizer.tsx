@@ -23,6 +23,11 @@ const mazes = [
   { name: "Kruskal's Algorithm", value: 'kruskal' },
   { name: "Eller's Algorithm", value: 'eller' },
 ];
+const heuristics = [
+  { name: 'Manhattan distance', value: 'manhattan' },
+  { name: 'Fudge', value: 'fudge' },
+  { name: 'Cross', value: 'cross' },
+];
 
 // Calculate how many cells fit the screen horizontally and vertically
 const calculateCells = (): [number, number] => {
@@ -88,13 +93,16 @@ export const PathfindingVisualizer: React.FC = () => {
   const [finish, setFinish] = React.useState<Coord>({ x: 7, y: 3 });
   const [grid, setGrid] = React.useState<Cell[][]>(newGrid(start, finish));
   const [mode, setMode] = React.useState<string>('wall');
+  const [heuristic, setHeuristic] = React.useState<string>('manhattan');
 
   const search = async (): Promise<void> => {
     const searcher = getPathfindingAlgorithm(algorithm);
     setSearching(true);
-    await searcher(start, finish, grid, setGrid).then(async (res) => {
-      if (res.success) await drawPath(res, grid, setGrid);
-    });
+    await searcher(start, finish, grid, setGrid, heuristic).then(
+      async (res) => {
+        if (res.success) await drawPath(res, grid, setGrid);
+      }
+    );
     setSearching(false);
   };
 
@@ -121,6 +129,10 @@ export const PathfindingVisualizer: React.FC = () => {
                 setAlgorithm={setAlgorithm}
               />
             }
+            algorithm={algorithm}
+            heuristic={heuristic}
+            heuristics={heuristics}
+            setHeuristic={setHeuristic}
             resetGrid={() => setGrid(newGrid(start, finish))}
             removePath={() => removePath(grid, setGrid)}
             search={search}

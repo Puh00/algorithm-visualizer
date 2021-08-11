@@ -6,14 +6,60 @@ import { adjacentCoords, extractPath, isSameCoord, sleep } from '../../utils';
 import { Cell, Coord } from '../model/Cell';
 import { PQEntry, Result } from '../model/PQEntry';
 
+// _____Different tie breakers_____
 /**
  * Calulates the Manhattan distance between the given coordinates.
  * @param p the first coordinate.
  * @param q the second coordinate.
  * @returns the Manhattan distance between the two coordinates.
  */
-const manhattanDistance = (p: Coord, q: Coord): number => {
-  return 2 * (Math.abs(p.x - q.x) + Math.abs(p.y - q.y));
+const manhattanDistance = (p: Coord, q: Coord): number =>
+  Math.abs(p.x - q.x) + Math.abs(p.y - q.y);
+
+/**
+ * Nudge the scale of [h] slightly so that the heuristic favours nodes closer to the goal.
+ * - Inadmissible heuristic
+ * From {@link https://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html}
+ * @param p the current coordinate.
+ * @param q the target coordinate.
+ * @returns modified heuristic.
+ */
+const fudge = (p: Coord, q: Coord): number => {
+  const heuristic = manhattanDistance(p, q);
+  return heuristic * (1 + 1 / 1000);
+};
+
+/**
+ * Heuristic that prefers a path that lies along the straight line from the start to the
+ * goal
+ * - Inadmissible heuristic
+ * From {@link https://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html}
+ * @param start starting coordinate.
+ * @param p the current coordinate.
+ * @param q the target coordinate.
+ * @returns modified heuristic.
+ */
+const crossProduct = (start: Coord, p: Coord, q: Coord): number => {
+  const dx1 = p.x - q.x;
+  const dy1 = p.y - q.y;
+  const dx2 = start.x - q.x;
+  const dy2 = start.y - q.y;
+  const cross = Math.abs(dx1 * dy2 - dx2 * dy1);
+  const heuristic = manhattanDistance(p, q);
+  return heuristic + cross * 0.001;
+};
+
+// Delegate calculation of heuristic
+const guessCost = (
+  start: Coord,
+  p: Coord,
+  q: Coord,
+  heuristic = 'manhattan'
+): number => {
+  if (heuristic === 'manhattan') return manhattanDistance(p, q);
+  else if (heuristic === 'fudge') return fudge(p, q);
+  else if (heuristic === 'cross') return crossProduct(start, p, q);
+  else throw new Error('Invalid heuristic type');
 };
 
 /**
@@ -28,7 +74,8 @@ export const astar = async (
   start: Coord,
   goal: Coord,
   grid: Cell[][],
-  setState: React.Dispatch<React.SetStateAction<Cell[][]>>
+  setState: React.Dispatch<React.SetStateAction<Cell[][]>>,
+  heuristic?: string
 ): Promise<Result> => {
   const [n, m] = [grid.length, grid[0].length];
 
@@ -52,7 +99,7 @@ export const astar = async (
     coord: start,
     costToHere: 0,
     backPointer: null,
-    guessCost: manhattanDistance(start, goal),
+    guessCost: guessCost(start, start, goal, heuristic),
   });
 
   while (pq.length !== 0) {
@@ -78,7 +125,7 @@ export const astar = async (
           coord: c,
           costToHere: costToNext,
           backPointer: entry,
-          guessCost: manhattanDistance(c, goal),
+          guessCost: guessCost(start, c, goal, heuristic),
         });
       }
     }

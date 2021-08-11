@@ -7,7 +7,8 @@ type pathfindingFunc = (
   start: Coord,
   finish: Coord,
   grid: Cell[][],
-  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
+  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>,
+  heuristic?: string
 ) => Promise<Result>;
 
 export const getPathfindingAlgorithm = (algorithm: string): pathfindingFunc => {
