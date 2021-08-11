@@ -40,8 +40,7 @@ const calculateCells = (): [number, number] => {
   ];
 };
 
-const resetGrid = (start: Coord, finish: Coord): Cell[][] => {
-  // n * m size of the grid
+const newGrid = (start: Coord, finish: Coord): Cell[][] => {
   const [n, m] = calculateCells();
   const grid: Cell[][] = [...Array(m)].map((_, i) => {
     return [...Array(n)].map((_, j) => ({
@@ -58,7 +57,21 @@ const resetGrid = (start: Coord, finish: Coord): Cell[][] => {
   return grid;
 };
 
-// Mark the path received from pathfinding algorithm
+const removePath = (
+  grid: Cell[][],
+  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>
+): void => {
+  for (let row = 0; row < grid.length; row++)
+    for (let col = 0; col < grid[0].length; col++) {
+      const cell = grid[row][col];
+      if (cell.isPath) cell.isPath = false;
+      if (cell.isActive) cell.isActive = false;
+      console.log(`${cell.isPath}, ${cell.isActive}`);
+    }
+  setGrid([...grid]);
+};
+
+// Draw the path received from pathfinding algorithm
 const drawPath = async (
   res: Result,
   grid: Cell[][],
@@ -79,10 +92,8 @@ export const PathfindingVisualizer: React.FC = () => {
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 1, y: 3 });
   const [finish, setFinish] = React.useState<Coord>({ x: 7, y: 3 });
-  const [grid, setGrid] = React.useState<Cell[][]>(resetGrid(start, finish));
+  const [grid, setGrid] = React.useState<Cell[][]>(newGrid(start, finish));
   const [mode, setMode] = React.useState<string>('wall');
-
-  const reset = (): void => setGrid(resetGrid(start, finish));
 
   const search = async (): Promise<void> => {
     const searcher = getPathfindingAlgorithm(algorithm);
@@ -109,7 +120,8 @@ export const PathfindingVisualizer: React.FC = () => {
           }}
         >
           <Panel
-            resetGrid={reset}
+            resetGrid={() => setGrid(newGrid(start, finish))}
+            removePath={() => removePath(grid, setGrid)}
             search={search}
             mode={mode}
             setMode={setMode}

@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   Dropdown,
   DropdownButton,
+  SplitButton,
   ToggleButton,
 } from 'react-bootstrap';
 
@@ -18,6 +19,7 @@ interface Props {
   setMode: React.Dispatch<SetStateAction<string>>;
   modes: NameValue[];
   resetGrid: () => void;
+  removePath: () => void;
   search: () => Promise<void>;
   mazes: NameValue[];
   generateMaze: (algorithmType: string) => Promise<void>;
@@ -28,6 +30,7 @@ export const Panel: React.FC<Props> = ({
   modes,
   setMode,
   resetGrid,
+  removePath,
   search,
   mazes,
   generateMaze,
@@ -51,9 +54,16 @@ export const Panel: React.FC<Props> = ({
           </Dropdown.Item>
         ))}
       </DropdownButton>
-      <Button className="m-2" variant="danger" onClick={() => resetGrid()}>
-        Reset
-      </Button>
+      <SplitButton
+        id="reset"
+        className="m-2"
+        variant="danger"
+        title={'Reset'}
+        toggleLabel=""
+        onClick={resetGrid}
+      >
+        <Dropdown.Item onClick={removePath}>Clear path</Dropdown.Item>
+      </SplitButton>
       <Button onClick={search} variant="primary">
         Search!
       </Button>
