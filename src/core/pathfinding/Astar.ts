@@ -13,7 +13,7 @@ import { PQEntry, Result } from '../model/PQEntry';
  * @returns the Manhattan distance between the two coordinates.
  */
 const manhattanDistance = (p: Coord, q: Coord): number => {
-  return Math.abs(p.x - q.x) + Math.abs(p.y - q.y);
+  return 2 * (Math.abs(p.x - q.x) + Math.abs(p.y - q.y));
 };
 
 /**
