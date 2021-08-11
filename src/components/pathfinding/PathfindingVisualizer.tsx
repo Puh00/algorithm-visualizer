@@ -61,7 +61,6 @@ const removePath = (
       const cell = grid[row][col];
       if (cell.isPath) cell.isPath = false;
       if (cell.isActive) cell.isActive = false;
-      console.log(`${cell.isPath}, ${cell.isActive}`);
     }
   setGrid([...grid]);
 };
@@ -82,7 +81,7 @@ const drawPath = async (
 };
 
 export const PathfindingVisualizer: React.FC = () => {
-  const [algorithm, setAlgorithm] = React.useState<string>('ucs');
+  const [algorithm, setAlgorithm] = React.useState<string>('astar');
   // to disable moving starting and finish cells during search
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 1, y: 3 });
@@ -115,16 +114,18 @@ export const PathfindingVisualizer: React.FC = () => {
           }}
         >
           <Panel
+            AlgorithmButtonGroup={
+              <AlgorithmButtonGroup
+                defaultAlgorithm={algorithm}
+                algorithms={algorithms}
+                setAlgorithm={setAlgorithm}
+              />
+            }
             resetGrid={() => setGrid(newGrid(start, finish))}
             removePath={() => removePath(grid, setGrid)}
             search={search}
             mazes={mazes}
             generateMaze={generateMaze}
-          />
-          <AlgorithmButtonGroup
-            defaultAlgorithm={algorithm}
-            algorithms={algorithms}
-            setAlgorithm={setAlgorithm}
           />
         </Col>
       </Row>

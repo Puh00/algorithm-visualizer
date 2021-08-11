@@ -8,6 +8,7 @@ interface NameValue {
 }
 
 interface Props {
+  AlgorithmButtonGroup: React.ReactNode;
   resetGrid: () => void;
   removePath: () => void;
   search: () => Promise<void>;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const Panel: React.FC<Props> = ({
+  AlgorithmButtonGroup,
   resetGrid,
   removePath,
   search,
@@ -54,6 +56,7 @@ export const Panel: React.FC<Props> = ({
       <Button onClick={search} variant="primary" className="m-1">
         Search!
       </Button>
+      {AlgorithmButtonGroup}
     </div>
   );
 };
