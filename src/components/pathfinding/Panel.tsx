@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
+import {
+  Button,
+  Dropdown,
+  DropdownButton,
+  OverlayTrigger,
+  SplitButton,
+} from 'react-bootstrap';
+
+import { popover } from './Popover';
 
 interface NameValue {
   name: string;
@@ -8,7 +16,11 @@ interface NameValue {
 }
 
 interface Props {
+  algorithm: string;
   AlgorithmButtonGroup: React.ReactNode;
+  heuristic: string;
+  heuristics: NameValue[];
+  setHeuristic: React.Dispatch<React.SetStateAction<string>>;
   resetGrid: () => void;
   removePath: () => void;
   search: () => Promise<void>;
@@ -17,7 +29,11 @@ interface Props {
 }
 
 export const Panel: React.FC<Props> = ({
+  algorithm,
   AlgorithmButtonGroup,
+  heuristic,
+  heuristics,
+  setHeuristic,
   resetGrid,
   removePath,
   search,
@@ -57,6 +73,25 @@ export const Panel: React.FC<Props> = ({
         Search!
       </Button>
       {AlgorithmButtonGroup}
+      <OverlayTrigger placement="right" overlay={popover}>
+        <DropdownButton
+          alignRight={true}
+          className="m-1"
+          variant="secondary"
+          title={heuristic.charAt(0).toUpperCase() + heuristic.slice(1)}
+          disabled={algorithm !== 'astar'}
+        >
+          {heuristics.map((h) => (
+            <Dropdown.Item
+              as="button"
+              key={h.value}
+              onClick={() => setHeuristic(h.value)}
+            >
+              {h.name}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+      </OverlayTrigger>
     </div>
   );
 };
