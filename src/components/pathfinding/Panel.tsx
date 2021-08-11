@@ -1,13 +1,6 @@
-import React, { SetStateAction } from 'react';
+import React from 'react';
 
-import {
-  Button,
-  ButtonGroup,
-  Dropdown,
-  DropdownButton,
-  SplitButton,
-  ToggleButton,
-} from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 interface NameValue {
   name: string;
@@ -15,9 +8,6 @@ interface NameValue {
 }
 
 interface Props {
-  mode: string;
-  setMode: React.Dispatch<SetStateAction<string>>;
-  modes: NameValue[];
   resetGrid: () => void;
   removePath: () => void;
   search: () => Promise<void>;
@@ -26,9 +16,6 @@ interface Props {
 }
 
 export const Panel: React.FC<Props> = ({
-  mode,
-  modes,
-  setMode,
   resetGrid,
   removePath,
   search,
@@ -64,23 +51,9 @@ export const Panel: React.FC<Props> = ({
       >
         <Dropdown.Item onClick={removePath}>Clear path</Dropdown.Item>
       </SplitButton>
-      <Button onClick={search} variant="primary">
+      <Button onClick={search} variant="primary" className="m-1">
         Search!
       </Button>
-      <ButtonGroup className="p-3">
-        {modes.map((m) => (
-          <ToggleButton
-            key={m.value}
-            type="radio"
-            variant="outline-warning"
-            value={m.value}
-            checked={mode === m.value}
-            onChange={(e) => setMode(e.currentTarget.value)}
-          >
-            {m.name}
-          </ToggleButton>
-        ))}
-      </ButtonGroup>
     </div>
   );
 };

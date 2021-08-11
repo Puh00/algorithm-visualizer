@@ -6,6 +6,7 @@ import { CellButton } from './CellButton';
 interface Props {
   grid: Cell[][];
   mode: string;
+  setMode: React.Dispatch<React.SetStateAction<string>>;
   setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>;
   start: Coord;
   setStart: React.Dispatch<React.SetStateAction<Coord>>;
@@ -17,6 +18,7 @@ interface Props {
 export const Grid: React.FC<Props> = ({
   grid,
   mode,
+  setMode,
   setGrid,
   start,
   setStart,
@@ -53,9 +55,12 @@ export const Grid: React.FC<Props> = ({
   const handleMouseUp = (): void => setMouseDown(false);
 
   const handleMouseDown = (row: number, col: number): void => {
-    if (mode === 'wall') toggleWall(row, col);
-    else if (mode === 'start' && !searching) moveStart(row, col);
-    else if (mode === 'finish' && !searching) moveFinish(row, col);
+    if (grid[row][col].isStart) setMode('start');
+    else if (grid[row][col].isFinish) setMode('finish');
+    else {
+      setMode('wall');
+      toggleWall(row, col);
+    }
     setMouseDown(true);
   };
 

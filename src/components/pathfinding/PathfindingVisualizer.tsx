@@ -23,11 +23,6 @@ const mazes = [
   { name: "Kruskal's Algorithm", value: 'kruskal' },
   { name: "Eller's Algorithm", value: 'eller' },
 ];
-const modes = [
-  { name: 'Wall', value: 'wall' },
-  { name: 'Start', value: 'start' },
-  { name: 'Finish', value: 'finish' },
-];
 
 // Calculate how many cells fit the screen horizontally and vertically
 const calculateCells = (): [number, number] => {
@@ -123,9 +118,6 @@ export const PathfindingVisualizer: React.FC = () => {
             resetGrid={() => setGrid(newGrid(start, finish))}
             removePath={() => removePath(grid, setGrid)}
             search={search}
-            mode={mode}
-            setMode={setMode}
-            modes={modes}
             mazes={mazes}
             generateMaze={generateMaze}
           />
@@ -141,6 +133,7 @@ export const PathfindingVisualizer: React.FC = () => {
           <Grid
             grid={grid}
             mode={mode}
+            setMode={setMode}
             setGrid={setGrid}
             start={start}
             setStart={setStart}
