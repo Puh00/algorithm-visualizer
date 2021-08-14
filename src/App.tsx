@@ -12,8 +12,12 @@ const App = (): JSX.Element => {
     <Router>
       <Header />
       <Switch>
-        <Route exact path={['/', '/sorting']} component={SortingVisualizer} />
-        <Route path="/pathfinding" component={PathfindingVisualizer} />
+        <Route path="/sorting" component={SortingVisualizer} />
+        <Route
+          exact
+          path={['/', '/pathfinding']}
+          component={PathfindingVisualizer}
+        />
       </Switch>
     </Router>
   );
