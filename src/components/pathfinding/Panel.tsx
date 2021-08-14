@@ -41,13 +41,7 @@ export const Panel: React.FC<Props> = ({
   generateMaze,
 }: Props) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <div className="app-center">
       <DropdownButton variant="success" title="Mazes" menuAlign="left">
         {mazes.map((m, i) => (
           <Dropdown.Item
