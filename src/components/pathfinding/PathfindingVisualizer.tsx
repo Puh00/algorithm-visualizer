@@ -128,13 +128,7 @@ export const PathfindingVisualizer: React.FC = () => {
   return (
     <Container fluid={true} style={{ padding: '0' }}>
       <Row>
-        <Col
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <Col>
           <Panel
             AlgorithmButtonGroup={
               <AlgorithmButtonGroup
@@ -156,7 +150,7 @@ export const PathfindingVisualizer: React.FC = () => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col md="auto">
+        <Col md="auto" className="app-center">
           <Grid
             grid={grid}
             mode={mode}

@@ -1,8 +1,13 @@
-/*_____ Base _____*/
 html, body {
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+}
+
+.app-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 [type="radio"] {
