@@ -14,6 +14,7 @@ import { Panel } from './Panel';
 const algorithms = [
   { name: 'UCS', value: 'ucs' },
   { name: 'A*', value: 'astar' },
+  { name: 'Bidirectional search', value: 'bidirectional' },
 ];
 const mazes = [
   { name: 'Recursive Division', value: 'division' },
@@ -86,7 +87,7 @@ const drawPath = async (
 };
 
 export const PathfindingVisualizer: React.FC = () => {
-  const [algorithm, setAlgorithm] = React.useState<string>('astar');
+  const [algorithm, setAlgorithm] = React.useState<string>('ucs');
   // to disable moving starting and finish cells during search
   const [searching, setSearching] = React.useState<boolean>(false);
   const [start, setStart] = React.useState<Coord>({ x: 1, y: 3 });

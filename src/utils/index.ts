@@ -1,6 +1,6 @@
 export { sleep } from './Sleep';
 export { swap } from './Array';
-export { extractPath } from './Path';
+export { extractPath, mergePath, reversePath } from './Path';
 export {
   adjacentCoords,
   alignmentBetweenCoordinates,
