@@ -33,7 +33,7 @@ const heuristics = [
 // Calculate how many cells fit the screen horizontally and vertically
 const calculateCells = (): [number, number] => {
   const noHorizontalCells = Math.floor(window.innerWidth / 30);
-  const noVerticalCells = Math.floor((window.innerHeight - 160) / 30);
+  const noVerticalCells = Math.floor((window.innerHeight - 130) / 30);
   // maze algorithm requires maze to have odd size
   return [
     noHorizontalCells % 2 === 0 ? noHorizontalCells - 1 : noHorizontalCells,
